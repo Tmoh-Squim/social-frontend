@@ -24,7 +24,7 @@ const Login = () => {
       return alert("please fill in all details");
     }
     try {
-      const res = await axios.post(`${ServerUrl}/api/v1/auth/login`, {
+      const res = await axios.post(`${ServerUrl}/v1/auth/login`, {
         email,
         password
       });
