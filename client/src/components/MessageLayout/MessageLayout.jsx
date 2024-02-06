@@ -136,7 +136,7 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[34px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[37px]"
                           : null
                       }
                     ></div>
@@ -158,7 +158,7 @@ const SideBar = ({
                       <p className="text-white text-[14px]">
                         {receiver.name}
                       </p>
-                      <p className="text-center text-gray-700 ">
+                      <p className=" text-gray-700 ">
                         {lastMessage?.length > 13
                           ? lastMessage.slice(0, 13) + "..."
                           : lastMessage}
@@ -175,7 +175,7 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[34px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[37px]"
                           : null
                       }
                     ></div>
@@ -197,7 +197,7 @@ const SideBar = ({
                     <p className="text-white text-[14px]">
                       {receiver?.name}
                     </p>
-                    <p className="text-center text-gray-700 ">
+                    <p className=" text-gray-700 ">
                       {lastMessage?.length > 13
                         ? lastMessage.slice(0, 13) + "..."
                         : lastMessage}
