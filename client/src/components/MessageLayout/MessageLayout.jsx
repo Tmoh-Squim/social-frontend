@@ -57,6 +57,7 @@ const MessageLayout = () => {
           users={users}
           conversation={conversation}
           me={me}
+          onlineUsers={onlineUsers}
           navigate={navigate}
           dispatch={dispatch}
         />
@@ -209,6 +210,7 @@ const Coversation = ({
   users,
   dispatch,
   setOpen,
+  onlineUsers,
   navigate,
 }) => {
   const id = conversation?._id;
@@ -308,6 +310,9 @@ const Coversation = ({
           setText("")
         });
     }
+    const online =  onlineUsers?.find((user)=>user.userId == otherMember)
+    console.log('online',online);
+    
   };
   return (
     <>
@@ -320,10 +325,11 @@ const Coversation = ({
           }`}
         >
           <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
-            <div className="bg-neutral-400 w-[50px] h-[50px] rounded-full justify-center">
+            <div className="bg-neutral-400 w-[50px] h-[50px] rounded-full relative justify-center">
               <h2 className="text-xl text-center font-bold text-green-600">
                 {receiver.name[0]}
               </h2>
+              <div className={`${online ? 'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-2 right-2' : null}`}></div>
         </div>
             <div className="flex">
               <AiOutlinePhone
@@ -349,6 +355,7 @@ const Coversation = ({
                   {currentconversation &&
                     currentconversation.map((message, index) => {
                       const senderMessage = message.sender === me;
+                      
                       return (
                         <div key={index} className={`px-2 w-full`}>
                           <div
