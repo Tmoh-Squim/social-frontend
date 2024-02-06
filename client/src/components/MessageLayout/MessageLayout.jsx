@@ -340,7 +340,7 @@ const Coversation = ({
             </div>
           </div>
           <div
-            className=" box 800px:px-1 h-[100vh] mb-[47px] overflow-y-scroll overflow-x-hidden"
+            className=" box 800px:px-1 h-[100vh] mb-[55px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
             ref={containerRef}
           >
             {currentconversation?.map((message, index) => {
@@ -397,8 +397,30 @@ const Coversation = ({
               );
             })}
           </div>
+          <div className="w-full 800px:flex items-center justify-center hidden 800px:left-[25%] right-0 py-2  bg-neutral-500">
+            <form className="w-[95%] 800px:w-[70%] relative">
+              <input
+                type="text"
+                name="text"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Enter new message"
+                className=" w-full px-2 rounded-lg h-[42px] text-white font-600 bg-transparent outline-none focus:border-transparent border-none"
+              />
+              <AiOutlineSend
+                size={28}
+                color="white"
+                className={`${
+                  text !== ""
+                    ? "absolute right-2 top-2 cursor-pointer"
+                    : "hidden"
+                }`}
+                onClick={handleChat}
+              />
+            </form>
+          </div>
         </div>
-        <div className="w-full flex items-center justify-center absolute bottom-0 z-30 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
+        <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-30 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
             <form className="w-[95%] 800px:w-[70%] relative">
               <input
                 type="text"
