@@ -37,7 +37,7 @@ const MessageLayout = () => {
 
   return (
     <>
-      <div className="sidebar w-full h-screen bg-neutral-200 flex">
+      <div className="sidebar w-full h-screen overflow-y-scroll bg-neutral-200 flex">
         <SideBar
           conversations={conversations}
           setOpen={setOpen}
@@ -319,7 +319,7 @@ const Coversation = ({
               : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed overflow-y-scroll bg-neutral-100 justify-between  flex flex-col"
           }`}
         >
-          {/*<div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
+          <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
             <div className="bg-neutral-400 w-[50px] h-[50px] rounded-full justify-center">
               <h2 className="text-xl text-center font-bold text-green-600">
                 {receiver.name[0]}
@@ -338,7 +338,7 @@ const Coversation = ({
                 onClick={() => setOpen(false)}
               />
             </div>
-          </div>*/}
+          </div>
           <div
             className=" box 800px:px-1 h-[100vh] overflow-y-scroll overflow-x-hidden"
             ref={containerRef}
