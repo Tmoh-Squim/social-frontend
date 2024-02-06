@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import {toast} from "react-toastify"
 import {useSelector} from "react-redux"
+import {ServerUrl} from "../../server.tsx"
 const Login = () => {
   const {user} = useSelector((state)=>state.user)
   console.log('ldd',user);
@@ -23,7 +24,7 @@ const Login = () => {
       return alert("please fill in all details");
     }
     try {
-      const res = await axios.post("http://localhost:8081/api/v1/auth/login", {
+      const res = await axios.post(`${ServerUrl}/api/v1/auth/login`, {
         email,
         password
       });
