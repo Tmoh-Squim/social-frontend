@@ -85,8 +85,8 @@ const SideBar = ({
       <div
         className={`${
           open === true
-            ? "hidden 800px:w-[25%] 800px:block sidebar h-screen px-2 fixed overflow-y-scroll bg-neutral-500"
-            : "sidebar h-screen 800px:w-[25%] w-full bg-neutral-500 px-2 fixed overflow-y-scroll  800px:block"
+            ? "hidden 800px:w-[25%] 800px:block sidebar h-screen px-2 fixed bg-neutral-500"
+            : "sidebar h-screen 800px:w-[25%] w-full bg-neutral-500 px-2 fixed   800px:block"
         }`}
       >
         <div className="w-full items-end justify-end flex 800px:hidden cursor-pointer" onClick={()=>navigate("/")}>
@@ -136,7 +136,7 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[37px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[40px]"
                           : null
                       }
                     ></div>
@@ -175,7 +175,7 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[37px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[40px]"
                           : null
                       }
                     ></div>
@@ -329,8 +329,8 @@ const Coversation = ({
         <div
           className={`${
             open === true
-              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed overflow-y-scroll  bg-neutral-100 justify-between  flex flex-col"
-              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed overflow-y-scroll  bg-neutral-100 justify-between  flex flex-col"
+              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed bg-neutral-100 justify-between  flex flex-col"
+              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed  bg-neutral-100 justify-between  flex flex-col"
           }`}
         >
           <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
