@@ -258,6 +258,8 @@ const Coversation = ({
     }
   }, [messages, currentconversation]);
   const containerRef = useRef(null);
+  const online =  onlineUsers?.find((user)=>user.userId === otherMember)
+    console.log('online',online);
 
   const otherMember = conversation?.members?.find((member) => member != me);
   const receiver = users?.find((user) => user._id === otherMember);
@@ -267,8 +269,6 @@ const Coversation = ({
       lastMessageId: me,
       conversationId: id,
     });
-    const online =  onlineUsers?.find((user)=>user.userId === otherMember)
-    console.log('online',online);
 
     await axios
       .put(
@@ -329,7 +329,7 @@ const Coversation = ({
               <h2 className="text-xl text-center font-bold text-green-600">
                 {receiver.name[0]}
               </h2>
-              <div className={'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-1.5 right-0' }></div>
+              <div className={online?'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-1.5 right-0':null }></div>
         </div>
             <div className="flex">
               <AiOutlinePhone
