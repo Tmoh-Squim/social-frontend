@@ -315,8 +315,8 @@ const Coversation = ({
         <div
           className={`${
             open === true
-              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed overflow-y-scroll mt-[45px] bg-neutral-100 justify-between  flex flex-col"
-              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed overflow-y-scroll mt-[45px] bg-neutral-100 justify-between  flex flex-col"
+              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed overflow-y-scroll mb-[47px] bg-neutral-100 justify-between  flex flex-col"
+              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed overflow-y-scroll mb-[47px] bg-neutral-100 justify-between  flex flex-col"
           }`}
         >
           <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
