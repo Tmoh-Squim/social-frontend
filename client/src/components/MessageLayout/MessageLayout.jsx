@@ -136,14 +136,14 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-1 left-[27px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[29px]"
                           : null
                       }
                     ></div>
                   </div>
                   {lastMessageId === me ? (
-                    <div className="block">
-                      <p className="text-white text-[12px]">{receiver.name}</p>
+                    <div className="block ml-0.5">
+                      <p className="text-white text-[14px]">{receiver.name}</p>
                       <div className="flex">
                       <p className="mx-1">You:</p>
                       <p className="text-center text-gray-700">
@@ -154,8 +154,8 @@ const SideBar = ({
                       </div>
                     </div>
                   ) : (
-                    <div className="block">
-                      <p className="text-white text-[12px]">
+                    <div className="block ml-0.5">
+                      <p className="text-white text-[14px]">
                         {receiver.name}
                       </p>
                       <p className="text-center text-gray-700 ">
@@ -175,14 +175,14 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-1 left-[27px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[29px]"
                           : null
                       }
                     ></div>
                   </div>
                   {lastMessageId === me ? (
-                     <div className="block">
-                     <p className="text-white text-[12px]">{receiver?.name}</p>
+                     <div className="block ml-0.5">
+                     <p className="text-white text-[14px]">{receiver?.name}</p>
                      <div className="flex">
                      <p className="mx-1">You:</p>
                      <p className="text-center text-gray-700">
@@ -193,8 +193,8 @@ const SideBar = ({
                      </div>
                    </div>
                   ) : (
-                    <div className="block">
-                    <p className="text-white text-[12px]">
+                    <div className="block ml-0.5">
+                    <p className="text-white text-[14px]">
                       {receiver?.name}
                     </p>
                     <p className="text-center text-gray-700 ">
