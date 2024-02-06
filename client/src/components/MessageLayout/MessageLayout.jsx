@@ -136,7 +136,7 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[32px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[34px]"
                           : null
                       }
                     ></div>
@@ -167,7 +167,7 @@ const SideBar = ({
                   )}
                 </div>
               ) : (
-                <div className="flex items-center cursor-pointer">
+                <div className="flex items-center justify-start cursor-pointer">
                   <div className="w-[50px] h-[50px] flex rounded-full relative bg-gray-500 justify-center items-center">
                     <h3 className="text-xl text-black text-center">
                       {receiver?.name[0]}
@@ -175,7 +175,7 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[31px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[34px]"
                           : null
                       }
                     ></div>
