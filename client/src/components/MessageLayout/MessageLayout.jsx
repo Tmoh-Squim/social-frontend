@@ -315,8 +315,8 @@ const Coversation = ({
         <div
           className={`${
             open === true
-              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed overflow-y-scroll mb-[47px] bg-neutral-100 justify-between  flex flex-col"
-              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed overflow-y-scroll mb-[47px] bg-neutral-100 justify-between  flex flex-col"
+              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed overflow-y-scroll  bg-neutral-100 justify-between  flex flex-col"
+              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed overflow-y-scroll  bg-neutral-100 justify-between  flex flex-col"
           }`}
         >
           <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
@@ -340,7 +340,7 @@ const Coversation = ({
             </div>
           </div>
           <div
-            className=" box 800px:px-1 h-[100vh] overflow-y-scroll overflow-x-hidden"
+            className=" box 800px:px-1 h-[100vh] mb-[47px] overflow-y-scroll overflow-x-hidden"
             ref={containerRef}
           >
             {currentconversation?.map((message, index) => {
