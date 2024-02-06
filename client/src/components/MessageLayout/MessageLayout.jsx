@@ -129,22 +129,22 @@ const SideBar = ({
             >
               {active === index ? (
                 <div className="flex items-center cursor-pointer bg-[#0000002d] rounded-lg">
-                  <div className="w-[45px] h-[45px] flex rounded-full relative bg-gray-500 justify-center items-center">
+                  <div className="w-[50px] h-[50px] flex rounded-full relative bg-gray-500 justify-center items-center">
                     <h3 className="text-xl text-black text-center">
                       {receiver?.name[0]}
                     </h3>
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-1 left-[25px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-1 left-[27px]"
                           : null
                       }
                     ></div>
                   </div>
                   {lastMessageId === me ? (
                     <div className="block">
-                      <p className="text-white">{receiver.name}</p>
-                      <div className="flex mt-1">
+                      <p className="text-white text-[12px]">{receiver.name}</p>
+                      <div className="flex">
                       <p className="mx-1">You:</p>
                       <p className="text-center text-gray-700">
                         {lastMessage?.length > 13
@@ -155,10 +155,10 @@ const SideBar = ({
                     </div>
                   ) : (
                     <div className="block">
-                      <p className="text-white">
+                      <p className="text-white text-[12px]">
                         {receiver.name}
                       </p>
-                      <p className="text-center mt-1 text-gray-700 ">
+                      <p className="text-center text-gray-700 ">
                         {lastMessage?.length > 13
                           ? lastMessage.slice(0, 13) + "..."
                           : lastMessage}
@@ -168,22 +168,22 @@ const SideBar = ({
                 </div>
               ) : (
                 <div className="flex items-center cursor-pointer">
-                  <div className="w-[45px] h-[45px] flex rounded-full relative bg-gray-500 justify-center items-center">
+                  <div className="w-[50px] h-[50px] flex rounded-full relative bg-gray-500 justify-center items-center">
                     <h3 className="text-xl text-black text-center">
                       {receiver?.name[0]}
                     </h3>
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-1 left-[25px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-1 left-[27px]"
                           : null
                       }
                     ></div>
                   </div>
                   {lastMessageId === me ? (
                      <div className="block">
-                     <p className="text-white">{receiver.name}</p>
-                     <div className="flex mt-1">
+                     <p className="text-white text-[12px]">{receiver?.name}</p>
+                     <div className="flex">
                      <p className="mx-1">You:</p>
                      <p className="text-center text-gray-700">
                        {lastMessage?.length > 13
@@ -194,10 +194,10 @@ const SideBar = ({
                    </div>
                   ) : (
                     <div className="block">
-                    <p className="text-white">
-                      {receiver.name}
+                    <p className="text-white text-[12px]">
+                      {receiver?.name}
                     </p>
-                    <p className="text-center mt-1 text-gray-700 ">
+                    <p className="text-center text-gray-700 ">
                       {lastMessage?.length > 13
                         ? lastMessage.slice(0, 13) + "..."
                         : lastMessage}
