@@ -359,7 +359,7 @@ const Coversation = ({
                             {senderMessage ? (
                               <div className="flex flex-col w-[75%] 800px:w-[65%] justify-end items-end">
                                 <p
-                                  className=" bg-blue-500 px-2 800px:py-1 py-1.5  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
+                                  className=" bg-blue-500 px-2 800px:py-1.5 py-1  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
                                   style={{ maxWidth: "fit-content" }}
                                 >
                                   {message.text}
