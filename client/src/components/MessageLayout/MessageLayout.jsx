@@ -267,6 +267,8 @@ const Coversation = ({
       lastMessageId: me,
       conversationId: id,
     });
+    const online =  onlineUsers?.find((user)=>user.userId === otherMember)
+    console.log('online',online);
 
     await axios
       .put(
@@ -310,8 +312,6 @@ const Coversation = ({
           setText("")
         });
     }
-    const online =  onlineUsers?.find((user)=>user.userId === otherMember)
-    console.log('online',online);
     
   };
   return (
@@ -329,7 +329,7 @@ const Coversation = ({
               <h2 className="text-xl text-center font-bold text-green-600">
                 {receiver.name[0]}
               </h2>
-              <div className={'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-1.5 right-0.5' }></div>
+              <div className={'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-1.5 right-0' }></div>
         </div>
             <div className="flex">
               <AiOutlinePhone
