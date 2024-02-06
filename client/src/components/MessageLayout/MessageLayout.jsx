@@ -311,7 +311,7 @@ const Coversation = ({
   };
   return (
     <>
-      {open === true ? (<>
+      {open === true ? (<div className="box">
         <div
           className={`${
             open === true
@@ -340,7 +340,7 @@ const Coversation = ({
             </div>
           </div>
           <div
-            className=" box 800px:px-1 h-[100vh] mb-[114px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
+            className="  800px:px-1 h-[100vh] mb-[114px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
             ref={containerRef}
           >
             {currentconversation?.map((message, index) => {
@@ -420,7 +420,7 @@ const Coversation = ({
             </form>
           </div>
         </div>
-        <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-30 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
+        <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-30 left-0 800px:left-[25%] right-0 py-2 bg-transparent 800px:bg-neutral-500">
             <form className="w-[95%] 800px:w-[70%] relative">
               <input
                 type="text"
@@ -442,7 +442,7 @@ const Coversation = ({
               />
             </form>
           </div>
-    </>  ) : (
+    </div>  ) : (
         <div className="h-screen ml-[26%] w-[75%] bg-neutral-100">
           <div className="w-full h-[70px] items-center justify-between flex bg-blue-500">
             <AiOutlineArrowRight
