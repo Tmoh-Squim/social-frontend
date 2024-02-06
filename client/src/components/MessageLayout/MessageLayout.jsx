@@ -329,7 +329,7 @@ const Coversation = ({
               <h2 className="text-xl text-center font-bold text-green-600">
                 {receiver.name[0]}
               </h2>
-              <div className={`${online ? 'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-2 right-2' : null}`}></div>
+              <div className={'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-2 right-2' }></div>
         </div>
             <div className="flex">
               <AiOutlinePhone
