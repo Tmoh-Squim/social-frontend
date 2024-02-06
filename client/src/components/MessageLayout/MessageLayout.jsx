@@ -129,7 +129,7 @@ const SideBar = ({
             >
               {active === index ? (
                 <div className="flex items-center cursor-pointer bg-[#0000002d] rounded-lg">
-                  <div className="w-[35px] h-[35px] flex rounded-full relative bg-gray-500 justify-center items-center">
+                  <div className="w-[45px] h-[45px] flex rounded-full relative bg-gray-500 justify-center items-center">
                     <h3 className="text-xl text-black text-center">
                       {receiver?.name[0]}
                     </h3>
@@ -142,28 +142,33 @@ const SideBar = ({
                     ></div>
                   </div>
                   {lastMessageId === me ? (
-                    <>
+                    <div className="block">
+                      <p className="text-white">{receiver.name}</p>
+                      <div className="flex mt-1">
                       <p className="mx-1">You:</p>
                       <p className="text-center text-gray-700">
                         {lastMessage?.length > 13
                           ? lastMessage.slice(0, 13) + "..."
                           : lastMessage}
                       </p>
-                    </>
+                      </div>
+                    </div>
                   ) : (
-                    <>
-                      <p className="mx-1">{receiver.name[0]}:</p>
-                      <p className="text-center text-gray-700 ">
+                    <div className="block">
+                      <p className="text-white">
+                        {receiver.name}
+                      </p>
+                      <p className="text-center mt-1 text-gray-700 ">
                         {lastMessage?.length > 13
                           ? lastMessage.slice(0, 13) + "..."
                           : lastMessage}
                       </p>
-                    </>
+                    </div>
                   )}
                 </div>
               ) : (
                 <div className="flex items-center cursor-pointer">
-                  <div className="w-[35px] h-[35px] flex rounded-full relative bg-gray-500 justify-center items-center">
+                  <div className="w-[45px] h-[45px] flex rounded-full relative bg-gray-500 justify-center items-center">
                     <h3 className="text-xl text-black text-center">
                       {receiver?.name[0]}
                     </h3>
@@ -176,23 +181,28 @@ const SideBar = ({
                     ></div>
                   </div>
                   {lastMessageId === me ? (
-                    <>
-                      <p className="mx-1">You:</p>
-                      <p className="text-center text-gray-700">
-                        {lastMessage?.length > 13
-                          ? lastMessage.slice(0, 13) + "..."
-                          : lastMessage}
-                      </p>
-                    </>
+                     <div className="block">
+                     <p className="text-white">{receiver.name}</p>
+                     <div className="flex mt-1">
+                     <p className="mx-1">You:</p>
+                     <p className="text-center text-gray-700">
+                       {lastMessage?.length > 13
+                         ? lastMessage.slice(0, 13) + "..."
+                         : lastMessage}
+                     </p>
+                     </div>
+                   </div>
                   ) : (
-                    <>
-                      <p className="mx-1">{receiver.name[0]}:</p>
-                      <p className="text-center text-gray-700">
-                        {lastMessage?.length > 13
-                          ? lastMessage.slice(0, 13) + "..."
-                          : lastMessage}
-                      </p>
-                    </>
+                    <div className="block">
+                    <p className="text-white">
+                      {receiver.name}
+                    </p>
+                    <p className="text-center mt-1 text-gray-700 ">
+                      {lastMessage?.length > 13
+                        ? lastMessage.slice(0, 13) + "..."
+                        : lastMessage}
+                    </p>
+                  </div>
                   )}
                 </div>
               )}
@@ -261,7 +271,6 @@ const Coversation = ({
 
   const otherMember = conversation?.members?.find((member) => member != me);
   const online =  onlineUsers?.find((user)=>user.userId === otherMember)
-  console.log('online',online);
   const receiver = users?.find((user) => user._id === otherMember);
   const updateLastMessage = async () => {
     socket.emit("updateLastMessage", {
