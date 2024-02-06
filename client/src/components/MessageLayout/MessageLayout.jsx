@@ -136,7 +136,7 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[29px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[32px]"
                           : null
                       }
                     ></div>
@@ -154,7 +154,7 @@ const SideBar = ({
                       </div>
                     </div>
                   ) : (
-                    <div className="block ml-0.5">
+                    <div className="block ml-0.5 text-start">
                       <p className="text-white text-[14px]">
                         {receiver.name}
                       </p>
@@ -175,7 +175,7 @@ const SideBar = ({
                     <div
                       className={
                         online
-                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[29px]"
+                          ? "w-[12px] h-[12px] rounded-full bg-green-400 absolute bottom-2 left-[31px]"
                           : null
                       }
                     ></div>
@@ -193,7 +193,7 @@ const SideBar = ({
                      </div>
                    </div>
                   ) : (
-                    <div className="block ml-0.5">
+                    <div className="block ml-0.5 text-start">
                     <p className="text-white text-[14px]">
                       {receiver?.name}
                     </p>
