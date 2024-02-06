@@ -315,8 +315,8 @@ const Coversation = ({
         <div
           className={`${
             open === true
-              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed overflow-y-scroll bg-neutral-100 justify-between  flex flex-col"
-              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed overflow-y-scroll bg-neutral-100 justify-between  flex flex-col"
+              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed overflow-y-scroll mt-[45px] bg-neutral-100 justify-between  flex flex-col"
+              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed overflow-y-scroll mt-[45px] bg-neutral-100 justify-between  flex flex-col"
           }`}
         >
           <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
@@ -340,7 +340,7 @@ const Coversation = ({
             </div>
           </div>
           <div
-            className=" box 800px:px-1 h-[90vh] overflow-y-scroll overflow-x-hidden"
+            className=" box 800px:px-1 h-[100vh] overflow-y-scroll overflow-x-hidden"
             ref={containerRef}
           >
             {currentconversation?.map((message, index) => {
@@ -398,7 +398,7 @@ const Coversation = ({
             })}
           </div>
         </div>
-        <div className="w-full flex items-center justify-center absolute bottom-0 z-30 left-0 right-0 py-2  bg-neutral-500">
+        <div className="w-full flex items-center justify-center absolute bottom-0 z-30 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
             <form className="w-[95%] 800px:w-[70%] relative">
               <input
                 type="text"
