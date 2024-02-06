@@ -340,7 +340,7 @@ const Coversation = ({
             </div>
           </div>
           <div
-            className=" box 800px:px-1 h-[100vh] overflow-y-scroll overflow-x-hidden"
+            className=" box 800px:px-1 h-[75vh] overflow-y-scroll overflow-x-hidden"
             ref={containerRef}
           >
             {currentconversation?.map((message, index) => {
