@@ -10,8 +10,8 @@ import { format } from "timeago.js";
 import { ServerUrl, SocketId } from "../../server.tsx";
 import { io } from "socket.io-client";
 import axios from "axios";
-import {getConversations} from "../../redux/conversation"
-import {useNavigate} from "react-router-dom"
+import { getConversations } from "../../redux/conversation";
+import { useNavigate } from "react-router-dom";
 
 const socket = io(SocketId, { transports: ["websocket"] });
 const MessageLayout = () => {
@@ -19,7 +19,7 @@ const MessageLayout = () => {
     (state) => state.conversations?.conversations
   );
   const [onlineUsers, setOnlineUsers] = useState();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user?.user);
   const { users } = useSelector((state) => state.users?.users);
   const [open, setOpen] = useState(false);
@@ -29,7 +29,7 @@ const MessageLayout = () => {
   const me = user?._id;
 
   useEffect(() => {
-    socket.emit("join",user?._id)
+    socket.emit("join", user?._id);
     socket.on("getUsers", (data) => {
       setOnlineUsers(data);
     });
@@ -41,7 +41,9 @@ const MessageLayout = () => {
         <SideBar
           conversations={conversations}
           setOpen={setOpen}
+          open={open}
           me={me}
+          navigate={navigate}
           users={users}
           setConversation={setConversation}
           setActive={setActive}
@@ -69,15 +71,27 @@ const SideBar = ({
   setOpen,
   me,
   users,
+  open,
   setConversation,
   active,
+  navigate,
   dispatch,
   setActive,
   onlineUsers,
 }) => {
   return (
     <>
-      <div className="sidebar h-screen w-[25%] bg-neutral-500 px-2 fixed overflow-y-scroll  800px:block">
+      <div
+        className={`${
+          open === true
+            ? "hidden 800px:w-[25%] 800px:block sidebar h-screen px-2 fixed overflow-y-scroll bg-neutral-500"
+            : "sidebar h-screen 800px:w-[25%] w-full bg-neutral-500 px-2 fixed overflow-y-scroll  800px:block"
+        }`}
+      >
+        <div className="w-full items-end justify-end flex 800px:hidden cursor-pointer" onClick={()=>navigate("/")}>
+          <AiOutlineArrowRight size={28} color="black" />
+        </div>
+
         {conversations?.map((conversation, index) => {
           const otherMember = conversation?.members?.find(
             (member) => member != me
@@ -89,24 +103,18 @@ const SideBar = ({
             conversation?.lastMessageId
           );
           useEffect(() => {
-            socket.on("getLastMessage",(data)=>{
-                data?.conversationId === conversation._id ?(
-                    setLastMessage(data?.lastMessage)||
-                    setLastMessageId(data?.lastMessageId)
-                    
-                ):null
-                
-            })
-            
+            socket.on("getLastMessage", (data) => {
+              data?.conversationId === conversation._id
+                ? setLastMessage(data?.lastMessage) ||
+                  setLastMessageId(data?.lastMessageId)
+                : null;
+            });
           }, []);
-          
-          
-          
+
           const receiver = users?.find((user) => user?._id === otherMember);
           const online = onlineUsers?.find(
             (user) => user.userId === otherMember
           );
-          
 
           return (
             <div
@@ -172,7 +180,7 @@ const SideBar = ({
                       <p className="text-center text-gray-700">
                         {lastMessage?.length > 13
                           ? lastMessage.slice(0, 13) + "..."
-                          :lastMessage}
+                          : lastMessage}
                       </p>
                     </>
                   ) : (
@@ -194,26 +202,40 @@ const SideBar = ({
     </>
   );
 };
-const Coversation = ({ open, conversation, me, users, dispatch, setOpen,navigate }) => {
+const Coversation = ({
+  open,
+  conversation,
+  me,
+  users,
+  dispatch,
+  setOpen,
+  navigate,
+}) => {
   const id = conversation?._id;
   const [icoming, setIncoming] = useState(null);
   useEffect(() => {
     socket.on("getMessage", (data) => {
-      setIncoming(data);
+      console.log('first',data);
+      setIncoming(data)
+      return data=null
+      
     });
+
   }, []);
   useEffect(() => {
-    icoming?.conversationId === id
-      ? setCurrentConversation([
-          ...currentconversation,
-          {
-            text: icoming?.text,
-            sender: icoming?.senderId,
-            createdAt: Date.now(),
-          },
-        ])
-      : null;
-  }, [icoming]);
+    if (icoming && icoming.conversationId === id) {
+      setCurrentConversation(prevConversation => [
+        ...prevConversation,
+        {
+          text: icoming.text,
+          sender: icoming.senderId,
+          createdAt: Date.now(),
+        },
+      ]);
+    }else{
+      return
+    }
+  }, [icoming, id]);
 
   const { messages } = useSelector((state) => state.messages?.messages);
   const [currentconversation, setCurrentConversation] = useState([
@@ -241,7 +263,7 @@ const Coversation = ({ open, conversation, me, users, dispatch, setOpen,navigate
     socket.emit("updateLastMessage", {
       lastMessage: text,
       lastMessageId: me,
-      conversationId:id
+      conversationId: id,
     });
 
     await axios
@@ -255,6 +277,7 @@ const Coversation = ({ open, conversation, me, users, dispatch, setOpen,navigate
         }
       )
       .then((res) => {
+        setText("");
         console.log(res.data);
       });
   };
@@ -280,16 +303,22 @@ const Coversation = ({ open, conversation, me, users, dispatch, setOpen,navigate
           }
         )
         .then((res) => {
-          setCurrentConversation([...currentconversation, res.data.message]);
+        //  setCurrentConversation([...currentconversation, res.data.message]);
           updateLastMessage();
-          setText("");
+          setText("")
         });
     }
   };
   return (
     <>
       {open === true ? (
-        <div className="h-screen 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] fixed bg-neutral-100 justify-between overflow-y-hidden flex flex-col">
+        <div
+          className={`${
+            open === true
+              ? "h-screen 800px:ml-[25%] 800px:w-[75%] w-full fixed bg-neutral-100 justify-between overflow-y-hidden flex flex-col"
+              : "h-screen 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] fixed bg-neutral-100 justify-between overflow-y-hidden flex flex-col"
+          }`}
+        >
           <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
             <div className="bg-neutral-400 w-[50px] h-[50px] rounded-full justify-center">
               <h2 className="text-xl text-center font-bold text-green-600">
@@ -312,13 +341,11 @@ const Coversation = ({ open, conversation, me, users, dispatch, setOpen,navigate
           </div>
           <div
             className=" box 800px:px-1 h-[85vh] overflow-y-scroll overflow-x-hidden"
-            
             ref={containerRef}
           >
             {currentconversation?.map((message, index) => {
-               
               return (
-                <div key={index} className="my-1 justify-between" >
+                <div key={index} className="my-1 justify-between">
                   {currentconversation &&
                     currentconversation.map((message, index) => {
                       const senderMessage = message.sender === me;
@@ -382,8 +409,12 @@ const Coversation = ({ open, conversation, me, users, dispatch, setOpen,navigate
               />
               <AiOutlineSend
                 size={28}
-                color="white" 
-                className={`${text !=="" ? 'absolute right-2 top-2 cursor-pointer' :'hidden' }`}
+                color="white"
+                className={`${
+                  text !== ""
+                    ? "absolute right-2 top-2 cursor-pointer"
+                    : "hidden"
+                }`}
                 onClick={handleChat}
               />
             </form>
@@ -392,18 +423,18 @@ const Coversation = ({ open, conversation, me, users, dispatch, setOpen,navigate
       ) : (
         <div className="h-screen ml-[26%] w-[75%] bg-neutral-100">
           <div className="w-full h-[70px] items-center justify-between flex bg-blue-500">
-          <AiOutlineArrowRight
-                size={28}
-                color="black"
-                className="mx-2 cursor-pointer"
-                onClick={() => navigate("/")}
-              />
-          <AiOutlineArrowRight
-                size={28}
-                color="black"
-                className="mx-2 cursor-pointer"
-                onClick={() => navigate("/")}
-              />
+            <AiOutlineArrowRight
+              size={28}
+              color="black"
+              className="mx-2 cursor-pointer"
+              onClick={() => navigate("/")}
+            />
+            <AiOutlineArrowRight
+              size={28}
+              color="black"
+              className="mx-2 cursor-pointer"
+              onClick={() => navigate("/")}
+            />
           </div>
           <div className=" px-2 mt-1">
             <h2>Chat Area</h2>

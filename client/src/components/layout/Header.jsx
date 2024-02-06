@@ -7,7 +7,7 @@ const Header = () => {
   <div className="bg-blue-400 w-full justify-center items-center flex h-[80px] px-2">
     <div className="w-[60%] relative flex">
         <AiOutlineBars size={30} color="black" className="cursor-pointer mt-2 w-[10%]" />
-        <input type="search" name="search" placeholder="Search..." className="rounded-lg h-[45px] focus:border-transparent mx-2 w-[90%] px-3" />
+        <input type="search" name="search" placeholder="Search..." className="rounded-lg h-[45px] outline-none mx-2 w-[90%] px-3" />
         <AiOutlineSearch size={30} color="black" className="mx-2 absolute right-2 top-2" />
     </div>
     <div className="flex justify-end w-[40%]">
