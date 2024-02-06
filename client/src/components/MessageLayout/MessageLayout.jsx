@@ -310,7 +310,7 @@ const Coversation = ({
           setText("")
         });
     }
-    const online =  onlineUsers?.find((user)=>user.userId == otherMember)
+    const online =  onlineUsers?.find((user)=>user.userId === otherMember)
     console.log('online',online);
     
   };
