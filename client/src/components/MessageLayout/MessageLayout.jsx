@@ -258,10 +258,10 @@ const Coversation = ({
     }
   }, [messages, currentconversation]);
   const containerRef = useRef(null);
-  const online =  onlineUsers?.find((user)=>user.userId === otherMember)
-    console.log('online',online);
 
   const otherMember = conversation?.members?.find((member) => member != me);
+  const online =  onlineUsers?.find((user)=>user.userId === otherMember)
+  console.log('online',online);
   const receiver = users?.find((user) => user._id === otherMember);
   const updateLastMessage = async () => {
     socket.emit("updateLastMessage", {
@@ -329,7 +329,7 @@ const Coversation = ({
               <h2 className="text-xl text-center font-bold text-green-600">
                 {receiver.name[0]}
               </h2>
-              <div className={online?'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-1.5 right-0':null }></div>
+              <div className={online ? 'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-1.5 right-0':null }></div>
         </div>
             <div className="flex">
               <AiOutlinePhone
