@@ -37,7 +37,7 @@ const MessageLayout = () => {
 
   return (
     <>
-      <div className="w-full h-screen bg-neutral-200 flex overflow-y-hidden">
+      <div className="sidebar w-full h-screen bg-neutral-200 flex">
         <SideBar
           conversations={conversations}
           setOpen={setOpen}
@@ -315,8 +315,8 @@ const Coversation = ({
         <div
           className={`${
             open === true
-              ? "h-screen 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed bg-neutral-100 justify-between overflow-y-hidden flex flex-col"
-              : "h-screen 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed bg-neutral-100 justify-between overflow-y-hidden flex flex-col"
+              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed bg-neutral-100 justify-between  flex flex-col"
+              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed bg-neutral-100 justify-between  flex flex-col"
           }`}
         >
           <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
