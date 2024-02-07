@@ -226,16 +226,17 @@ const Coversation = ({
   const id = conversation?._id;
   const [icoming, setIncoming] = useState(null);
   useEffect(() => {
-    socket.on("getMessage", (data) => {
-      console.log('first',data);
-      setIncoming(data)
-      return ()=>{
-        socket.off("getMessage")
-      }
-   
-      
-    });
-
+    const handleIncomingMessage = (data) => {
+      console.log('first', data);
+      setIncoming(data);
+    };
+  
+    socket.on("getMessage", handleIncomingMessage);
+  
+    return () => {
+      // Clean up the event listener when the component unmounts
+      socket.off("getMessage", handleIncomingMessage);
+    };
   }, []);
   useEffect(() => {
     if (icoming && icoming?.conversationId === id) {
