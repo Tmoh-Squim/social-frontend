@@ -238,9 +238,7 @@ const Coversation = ({
     socket.off("getMessage", handleIncomingMessage);
   };
     }, []);
-    
-    socket.on("getMessage", handleIncomingMessage);
-  
+      
   useEffect(() => {
     if (icoming && icoming?.conversationId === id) {
       setCurrentConversation(prevConversation => [
