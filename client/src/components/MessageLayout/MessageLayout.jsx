@@ -224,6 +224,7 @@ const Coversation = ({
   navigate,
 }) => {
   const id = conversation?._id;
+  const { messages } = useSelector((state) => state.messages?.messages);
   const [icoming, setIncoming] = useState(null);
     const handleIncomingMessage = (data) => {
       console.log('first', data);
@@ -257,7 +258,6 @@ const Coversation = ({
     }
   }, [icoming, id,messages]);
 
-  const { messages } = useSelector((state) => state.messages?.messages);
   const [currentconversation, setCurrentConversation] = useState([
     ...(messages ? messages : []),
   ]);
