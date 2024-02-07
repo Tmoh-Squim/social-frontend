@@ -224,79 +224,38 @@ const Coversation = ({
   navigate,
 }) => {
   const id = conversation?._id;
-  const [icoming, setIncoming] = useState(null);
+  const [incoming, setIncoming] = useState(null);
+  const [currentConversation, setCurrentConversation] = useState([]);
+
   useEffect(() => {
-    const handleIncomingMessage = (data) => {
+    socket.on("getMessage", (data) => {
       console.log('first', data);
       setIncoming(data);
-    };
-  
-    socket.on("getMessage", handleIncomingMessage);
-  
-    return () => {
-      // Clean up the event listener when the component unmounts
-      socket.off("getMessage", handleIncomingMessage);
-    };
-  }, []);
-  useEffect(() => {
-    if (icoming && icoming?.conversationId === id) {
-      setCurrentConversation(prevConversation => [
-        ...prevConversation,
-        {
-          text: icoming.text,
-          sender: icoming.senderId,
-         // createdAt: Date.now(),
-        },
-      ]);
-    }else{
-      return
-    }
-  }, [icoming, id]);
-
-  const { messages } = useSelector((state) => state.messages?.messages);
-  const [currentconversation, setCurrentConversation] = useState([
-    ...(messages ? messages : []),
-  ]);
-  const [text, setText] = useState("");
-  useEffect(() => {
-    dispatch(getMessages(id));
-  }, [id]);
-  useEffect(() => {
-    setCurrentConversation([...(messages ? messages : [])]);
-  }, [id,messages]);
-
-  useEffect(() => {
-    // Check if containerRef.current is not null before setting scrollTop
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  }, [messages, currentconversation]);
-  const containerRef = useRef(null);
-
-  const otherMember = conversation?.members?.find((member) => member != me);
-  const online =  onlineUsers?.find((user)=>user.userId === otherMember)
-  const receiver = users?.find((user) => user._id === otherMember);
-  const updateLastMessage = async () => {
-    socket.emit("updateLastMessage", {
-      lastMessage: text,
-      lastMessageId: me,
-      conversationId: id,
     });
 
-    await axios
-      .put(
-        `${ServerUrl}/v2/conversation/update-conversation/${id}`,
-        { lastMessage: text, lastMessageId: me },
+    // Clean up the event listener when the component unmounts
+    return () => {
+      socket.off("getMessage");
+    };
+  }, []);
+
+  useEffect(() => {
+    if (incoming && incoming?.conversationId === id) {
+      setCurrentConversation((prevConversation) => [
+        ...prevConversation,
         {
-          headers: {
-            Authorization: `${localStorage.getItem("user-auth")}`,
-          },
-        }
-      )
-      .then((res) => {
-        setText("");
-      });
-  };
+          text: incoming.text,
+          sender: incoming.senderId,
+          createdAt:Date.now()
+        },
+      ]);
+    }
+  }, [incoming, id]);
+
+  useEffect(() => {
+    setCurrentConversation(messages || []);
+  }, [id, messages]);
+
   const handleChat = async (e) => {
     e.preventDefault();
     if (text === "") {
@@ -319,104 +278,120 @@ const Coversation = ({
           }
         )
         .then((res) => {
-        //  setCurrentConversation([...currentconversation, res.data.message]);
           updateLastMessage();
-          setText("")
+          setText("");
         });
     }
-    
   };
+
   return (
     <>
-      {open === true ? (<>
-        <div
-          className={`${
-            open === true
-              ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed bg-neutral-100 justify-between  flex flex-col"
-              : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed  bg-neutral-100 justify-between  flex flex-col"
-          }`}
-        >
-          <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
-            <div className="bg-neutral-400 w-[50px] h-[50px] rounded-full relative justify-center">
-              <h2 className="text-xl text-center font-bold text-green-600">
-                {receiver.name[0]}
-              </h2>
-              <div className={online ? 'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-1.5 right-0':null }></div>
-        </div>
-            <div className="flex">
-              <AiOutlinePhone
-                size={28}
-                color="black"
-                className="mx-2 cursor-pointer"
-              />
-              <AiOutlineArrowRight
-                size={28}
-                color="black"
-                className="mx-2 cursor-pointer"
-                onClick={() => setOpen(false)}
-              />
+      {open === true ? (
+        <>
+          <div
+            className={`${
+              open === true
+                ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed bg-neutral-100 justify-between  flex flex-col"
+                : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed  bg-neutral-100 justify-between  flex flex-col"
+            }`}
+          >
+            <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
+              <div className="bg-neutral-400 w-[50px] h-[50px] rounded-full relative justify-center">
+                <h2 className="text-xl text-center font-bold text-green-600">
+                  {receiver.name[0]}
+                </h2>
+                <div className={online ? 'w-[12px] h-[12px] rounded-full bg-green-500 absolute bottom-1.5 right-0':null }></div>
+              </div>
+              <div className="flex">
+                <AiOutlinePhone
+                  size={28}
+                  color="black"
+                  className="mx-2 cursor-pointer"
+                />
+                <AiOutlineArrowRight
+                  size={28}
+                  color="black"
+                  className="mx-2 cursor-pointer"
+                  onClick={() => setOpen(false)}
+                />
+              </div>
+            </div>
+            <div
+              className=" box 800px:px-1 h-[100vh] mb-[114px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
+              ref={containerRef}
+            >
+              {currentConversation?.map((message, index) => {
+                return (
+                  <div key={index} className="my-1 justify-between">
+                    <div key={index} className={`px-2 w-full`}>
+                      <div
+                        className={`${
+                          senderMessage ? "justify-end" : "justify-start"
+                        } flex w-full my-1.5 `}
+                      >
+                        {senderMessage ? (
+                          <div className="flex flex-col w-[75%] 800px:w-[65%] justify-end items-end">
+                            <p
+                              className=" bg-blue-500 px-2 800px:py-1.5 py-1  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
+                              style={{ maxWidth: "fit-content" }}
+                            >
+                              {message.text}
+                            </p>
+                            <p className="text-end text-black">
+                              {format(
+                                message?.createdAt
+                                  ? message.createdAt
+                                  : null
+                              )}
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col w-[75%] 800px:w-[65%]">
+                            <div
+                              className=" bg-[#66c428f5] py-1 px-2 font-500px text-[14px] 800px:text-[17px] text-white rounded-[14px] h-min inline-block"
+                              style={{ maxWidth: "fit-content" }}
+                            >
+                              {message.text}
+                            </div>
+                            <p className="text-start text-black">
+                              {format(
+                                message?.createdAt
+                                  ? message.createdAt
+                                  : null
+                              )}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="w-full 800px:flex items-center justify-center hidden 800px:left-[25%] right-0 py-2  bg-neutral-500">
+              <form className="w-[95%] 800px:w-[70%] relative">
+                <input
+                  type="text"
+                  name="text"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Enter new message"
+                  className=" w-full px-2 rounded-lg h-[42px] text-white font-600 bg-transparent outline-none focus:border-transparent border-none"
+                />
+                <AiOutlineSend
+                  size={28}
+                  color="white"
+                  className={`${
+                    text !== ""
+                      ? "absolute right-2 top-2 cursor-pointer"
+                      : "hidden"
+                  }`}
+                  onClick={handleChat}
+                />
+              </form>
             </div>
           </div>
-          <div
-            className=" box 800px:px-1 h-[100vh] mb-[114px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
-            ref={containerRef}
-          >
-            {currentconversation?.map((message, index) => {
-              return (
-                <div key={index} className="my-1 justify-between">
-                  {currentconversation &&
-                    currentconversation.map((message, index) => {
-                      const senderMessage = message.sender === me;
-                      
-                      return (
-                        <div key={index} className={`px-2 w-full`}>
-                          <div
-                            className={`${
-                              senderMessage ? "justify-end" : "justify-start"
-                            } flex w-full my-1.5 `}
-                          >
-                            {senderMessage ? (
-                              <div className="flex flex-col w-[75%] 800px:w-[65%] justify-end items-end">
-                                <p
-                                  className=" bg-blue-500 px-2 800px:py-1.5 py-1  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
-                                  style={{ maxWidth: "fit-content" }}
-                                >
-                                  {message.text}
-                                </p>
-                                <p className="text-end text-black">
-                                  {format(
-                                    message?.createdAt
-                                      ? message.createdAt
-                                      : null
-                                  )}
-                                </p>
-                              </div>
-                            ) : (
-                              <div className="flex flex-col w-[75%] 800px:w-[65%]">
-                                <div
-                                  className=" bg-[#66c428f5] py-1 px-2 font-500px text-[14px] 800px:text-[17px] text-white rounded-[14px] h-min inline-block"
-                                  style={{ maxWidth: "fit-content" }}
-                                >
-                                  {message.text}
-                                </div>
-                                <p className="text-start text-black">
-                                  {format(
-                                    message?.createdAt
-                                      ? message.createdAt
-                                      : null
-                                  )}
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              );
-            })}
-          </div>
-          <div className="w-full 800px:flex items-center justify-center hidden 800px:left-[25%] right-0 py-2  bg-neutral-500">
+          <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-30 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
             <form className="w-[95%] 800px:w-[70%] relative">
               <input
                 type="text"
@@ -438,30 +413,8 @@ const Coversation = ({
               />
             </form>
           </div>
-        </div>
-        <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-30 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
-            <form className="w-[95%] 800px:w-[70%] relative">
-              <input
-                type="text"
-                name="text"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="Enter new message"
-                className=" w-full px-2 rounded-lg h-[42px] text-white font-600 bg-transparent outline-none focus:border-transparent border-none"
-              />
-              <AiOutlineSend
-                size={28}
-                color="white"
-                className={`${
-                  text !== ""
-                    ? "absolute right-2 top-2 cursor-pointer"
-                    : "hidden"
-                }`}
-                onClick={handleChat}
-              />
-            </form>
-          </div>
-    </>  ) : (
+        </>
+      ) : (
         <div className="h-screen ml-[26%] w-[75%] bg-neutral-100">
           <div className="w-full h-[70px] items-center justify-between flex bg-blue-500">
             <AiOutlineArrowRight
@@ -485,4 +438,5 @@ const Coversation = ({
     </>
   );
 };
+
 export default MessageLayout;
