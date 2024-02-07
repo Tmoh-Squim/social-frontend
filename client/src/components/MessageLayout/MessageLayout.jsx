@@ -239,9 +239,11 @@ const Coversation = ({
   }, []);
 
   useEffect(() => {
-    if(incoming?.conversationId=== id){
+    if(incoming?.conversationId === id){
       setCurrentConversation((prev) => [...prev, incoming]);
     }
+    
+    
     //incoming &&
     //  conversation?.members.includes(incoming.sender) &&
     // setCurrentConversation((prev) => [...prev, incoming]);
@@ -271,7 +273,7 @@ const Coversation = ({
     if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
-  }, [currentconversation]); add 
+  }, [currentconversation]);
   const containerRef = useRef(null);
 
   const otherMember = conversation?.members?.find((member) => member != me);
