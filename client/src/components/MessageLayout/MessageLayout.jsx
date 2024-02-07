@@ -224,21 +224,20 @@ const Coversation = ({
   navigate,
 }) => {
   const id = conversation?._id;
-  const { messages } = useSelector((state) => state.messages?.messages);
   const [icoming, setIncoming] = useState(null);
-
+   
     useEffect(() => {
       const handleIncomingMessage = (data) => {
         console.log('first', data);
         setIncoming(data);
       };
       socket.on("getMessage", handleIncomingMessage);
-
-  return () => {
-    socket.off("getMessage", handleIncomingMessage);
-  };
+      return () => {
+        socket.off("getMessage", handleIncomingMessage);
+      };
     }, []);
-      
+    
+  
   useEffect(() => {
     if (icoming && icoming?.conversationId === id) {
       setCurrentConversation(prevConversation => [
@@ -250,11 +249,9 @@ const Coversation = ({
         },
       ]);
     }
-    if(messages){
-      setCurrentConversation(messages);
-    }
-  }, [icoming, id,messages]);
+  }, [icoming, id]);
 
+  const { messages } = useSelector((state) => state.messages?.messages);
   const [currentconversation, setCurrentConversation] = useState([
     ...(messages ? messages : []),
   ]);
