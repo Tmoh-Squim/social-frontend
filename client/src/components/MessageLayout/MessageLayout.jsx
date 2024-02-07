@@ -226,35 +226,27 @@ const Coversation = ({
   const id = conversation?._id;
   const [icoming, setIncoming] = useState(null);
    
-    useEffect(() => {
- const handleIncomingMessage = (data) => {
-      console.log('first', data);
-      setIncoming(data);
-    };
-      socket.on("getMessage", handleIncomingMessage);
-
-    }, []);
+  useEffect(() => {
+    socket.on("getMessage", (data) => {
+      setIncoming({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
     
   
   useEffect(() => {
     if (icoming && icoming?.conversationId === id) {
       setCurrentConversation(prevConversation => [
-        ...prevConversation,
-        {
-          text: icoming.text,
-          sender: icoming.senderId,
-          createdAt: Date.now(),
-        },
+        ...prevConversation,icoming
       ]);
-    }else{
-      return
     }
   }, [icoming, id]);
 
   const { messages } = useSelector((state) => state.messages?.messages);
-  const [currentconversation, setCurrentConversation] = useState([
-    ...(messages ? messages : []),
-  ]);
+  const [currentconversation, setCurrentConversation] = useState([]);
   const [text, setText] = useState("");
   useEffect(() => {
     dispatch(getMessages(id));
