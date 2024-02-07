@@ -228,8 +228,11 @@ const Coversation = ({
    
     useEffect(() => {
       const handleIncomingMessage = (data) => {
-        console.log('first', data);
-        setIncoming(data);
+        setIncoming({
+          sender:data?.senderId,
+          text: data.text,
+          createdAt: Date.now(),
+        });
       };
       socket.on("getMessage", handleIncomingMessage);
       return () => {
@@ -239,16 +242,8 @@ const Coversation = ({
     
   
   useEffect(() => {
-    if (icoming && icoming?.conversationId === id) {
-      setCurrentConversation(prevConversation => [
-        ...prevConversation,
-        {
-          text: icoming.text,
-          sender: icoming.senderId,
-          createdAt: Date.now(),
-        },
-      ]);
-    }
+    icoming && currentChat?.members.includes(icoming.sender)&&
+    setCurrentConversation((prev)=>[...prev,icoming])
   }, [icoming, id]);
 
   const { messages } = useSelector((state) => state.messages?.messages);
@@ -317,7 +312,7 @@ const Coversation = ({
           }
         )
         .then((res) => {
-        //  setCurrentConversation([...currentconversation, res.data.message]);
+         setCurrentConversation([...currentconversation, res.data.message]);
           updateLastMessage();
           setText("")
         });
