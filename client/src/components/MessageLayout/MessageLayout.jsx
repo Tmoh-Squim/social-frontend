@@ -227,16 +227,14 @@ const Coversation = ({
   const [icoming, setIncoming] = useState(null);
    
     useEffect(() => {
-      const handleIncomingMessage = (data) => {
-        setIncoming(data);
-      };
+ const handleIncomingMessage = (data) => {
+      console.log('first', data);
+      setIncoming(data);
+    };
       socket.on("getMessage", handleIncomingMessage);
-      return () => {
-        socket.off("getMessage", handleIncomingMessage);
-      };
-      
+
     }, []);
-    console.log('first',icoming);
+    
   
   useEffect(() => {
     if (icoming && icoming?.conversationId === id) {
@@ -248,6 +246,8 @@ const Coversation = ({
           createdAt: Date.now(),
         },
       ]);
+    }else{
+      return
     }
   }, [icoming, id]);
 
@@ -317,7 +317,7 @@ const Coversation = ({
           }
         )
         .then((res) => {
-         setCurrentConversation([...currentconversation, res.data.message]);
+        //  setCurrentConversation([...currentconversation, res.data.message]);
           updateLastMessage();
           setText("")
         });
