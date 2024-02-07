@@ -227,14 +227,15 @@ const Coversation = ({
   const [icoming, setIncoming] = useState(null);
    
     useEffect(() => {
-      const handleIncomingMessage = (data) => {
+      socket.on("getMessage", (data)=>{
         setIncoming({
           sender:data?.senderId,
           text: data.text,
           createdAt: Date.now(),
         });
-      };
-      socket.on("getMessage", handleIncomingMessage);
+      });
+      console.log('incoming',icoming,'data',data);
+      
       return () => {
         socket.off("getMessage", handleIncomingMessage);
       };
