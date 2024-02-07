@@ -224,45 +224,57 @@ const Coversation = ({
   navigate,
 }) => {
   const id = conversation?._id;
-  const [icoming, setIncoming] = useState(null);
+  const [incoming, setIncoming] = useState(null);
    
   useEffect(() => {
-    socket.on("getMessage", (data) => {
-      console.log('data',data);
-      
+    socket.on("getMessage", (data) => {      
       setIncoming({
         sender: data.senderId,
         text: data.text,
         createdAt: Date.now(),
       });
     });
+    console.log('inc',incoming);
   }, []);
     
   
   useEffect(() => {
-    if (icoming && icoming?.conversationId === id) {
-      setCurrentConversation(prevConversation => [
-        ...prevConversation,icoming
-      ]);
-    }
-  }, [icoming, id]);
+    incoming && conversation?.members.includes(incoming.sender)&&
+    setCurrentConversation((prev)=>[...prev,incoming])
+    console.log('current',currentconversation);
+    
+  }, [incoming, id]);
 
   const { messages } = useSelector((state) => state.messages?.messages);
   const [currentconversation, setCurrentConversation] = useState([]);
   const [text, setText] = useState("");
-  useEffect(() => {
+ {/* useEffect(() => {
     dispatch(getMessages(id));
-  }, [id]);
+  }, [id]);*/}
   useEffect(() => {
-    setCurrentConversation([...(messages ? messages : [])]);
-  }, [id,messages]);
+    const getMessage = async () => {
+      try {
+        const response = await axios.get(
+          `${ServerUrl}/v2/message/get-messages/${id}`,{
+            headers:{
+              "Authorization":`${localStorage.getItem('user-auth')}`
+            }
+          }
+        );
+        setCurrentConversation(response.data.messages);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getMessage();
+  }, [conversation,id]);
 
   useEffect(() => {
     // Check if containerRef.current is not null before setting scrollTop
     if (containerRef.current) {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
-  }, [messages, currentconversation]);
+  }, [ currentconversation]);
   const containerRef = useRef(null);
 
   const otherMember = conversation?.members?.find((member) => member != me);
