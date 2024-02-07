@@ -229,7 +229,16 @@ const Coversation = ({
       console.log('first', data);
       setIncoming(data);
     };
-  
+
+    useEffect(() => {
+
+      socket.on("getMessage", handleIncomingMessage);
+
+  return () => {
+    socket.off("getMessage", handleIncomingMessage);
+  };
+    }, []);
+    
     socket.on("getMessage", handleIncomingMessage);
   
   useEffect(() => {
@@ -242,10 +251,11 @@ const Coversation = ({
           createdAt: Date.now(),
         },
       ]);
-    }else{
-      return
     }
-  }, [icoming, id]);
+    if(messages){
+      setCurrentConversation(messages);
+    }
+  }, [icoming, id,messages]);
 
   const { messages } = useSelector((state) => state.messages?.messages);
   const [currentconversation, setCurrentConversation] = useState([
