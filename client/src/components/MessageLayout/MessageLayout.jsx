@@ -229,13 +229,16 @@ const Coversation = ({
     socket.on("getMessage", (data) => {
       console.log('first',data);
       setIncoming(data)
-      return data=null
+      return ()=>{
+        socket.off("getMessage")
+      }
+   
       
     });
 
   }, []);
   useEffect(() => {
-    if (icoming && icoming.conversationId === id) {
+    if (icoming && icoming?.conversationId === id) {
       setCurrentConversation(prevConversation => [
         ...prevConversation,
         {
@@ -257,9 +260,9 @@ const Coversation = ({
   useEffect(() => {
     dispatch(getMessages(id));
   }, [id]);
-//  useEffect(() => {
-  //  setCurrentConversation([...(messages ? messages : [])]);
- // }, [messages, id]);
+  useEffect(() => {
+    setCurrentConversation([...(messages ? messages : [])]);
+  }, [id,messages]);
 
   useEffect(() => {
     // Check if containerRef.current is not null before setting scrollTop
