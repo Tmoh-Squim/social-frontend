@@ -227,15 +227,14 @@ const Coversation = ({
   const [icoming, setIncoming] = useState(null);
    
     useEffect(() => {
-      socket.on("getMessage", (data)=>{
+      const handleIncomingMessage = (data) => {
         setIncoming({
           sender:data?.senderId,
           text: data.text,
           createdAt: Date.now(),
         });
-        console.log('incoming',icoming,'data',data);
-      });
-      
+      };
+      socket.on("getMessage", handleIncomingMessage);
       return () => {
         socket.off("getMessage", handleIncomingMessage);
       };
@@ -245,6 +244,16 @@ const Coversation = ({
   useEffect(() => {
     icoming && currentChat?.members.includes(icoming.sender)&&
     setCurrentConversation((prev)=>[...prev,icoming])
+    if (icoming && icoming?.conversationId === id) {
+      setCurrentConversation(prevConversation => [
+        ...prevConversation,
+        {
+          text: icoming.text,
+          sender: icoming.senderId,
+          createdAt: Date.now()
+        },
+      ]);
+    }
   }, [icoming, id]);
 
   const { messages } = useSelector((state) => state.messages?.messages);
