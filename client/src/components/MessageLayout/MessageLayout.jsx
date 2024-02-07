@@ -232,6 +232,7 @@ const Coversation = ({
       setIncoming({
         sender: data.senderId,
         text: data.text,
+        conversationId: data.conversationId,
         createdAt: Date.now(),
       });
     });
@@ -239,8 +240,11 @@ const Coversation = ({
 
   useEffect(() => {
     incoming &&
-      conversation?.members.includes(incoming.sender) &&
+      incoming.conversationId === id &&
       setCurrentConversation((prev) => [...prev, incoming]);
+    //incoming &&
+    //  conversation?.members.includes(incoming.sender) &&
+    // setCurrentConversation((prev) => [...prev, incoming]);
   }, [incoming, conversation]);
 
   useEffect(() => {
@@ -260,7 +264,7 @@ const Coversation = ({
       }
     };
     getMessage();
-  }, [conversation,id]);
+  }, [conversation, id]);
 
   useEffect(() => {
     // Check if containerRef.current is not null before setting scrollTop
