@@ -309,7 +309,7 @@ const Coversation = ({
           }
         )
         .then((res) => {
-        //  setCurrentConversation([...currentconversation, res.data.message]);
+         // setCurrentConversation([...currentconversation, res.data.message]);
           updateLastMessage();
           setText("")
         });
