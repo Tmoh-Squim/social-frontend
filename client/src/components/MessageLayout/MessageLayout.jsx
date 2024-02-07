@@ -226,13 +226,12 @@ const Coversation = ({
   const id = conversation?._id;
   const { messages } = useSelector((state) => state.messages?.messages);
   const [icoming, setIncoming] = useState(null);
-    const handleIncomingMessage = (data) => {
-      console.log('first', data);
-      setIncoming(data);
-    };
 
     useEffect(() => {
-
+      const handleIncomingMessage = (data) => {
+        console.log('first', data);
+        setIncoming(data);
+      };
       socket.on("getMessage", handleIncomingMessage);
 
   return () => {
