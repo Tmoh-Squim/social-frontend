@@ -233,8 +233,8 @@ const Coversation = ({
           text: data.text,
           createdAt: Date.now(),
         });
+        console.log('incoming',icoming,'data',data);
       });
-      console.log('incoming',icoming,'data',data);
       
       return () => {
         socket.off("getMessage", handleIncomingMessage);
