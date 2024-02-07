@@ -228,6 +228,8 @@ const Coversation = ({
    
   useEffect(() => {
     socket.on("getMessage", (data) => {
+      console.log('data',data);
+      
       setIncoming({
         sender: data.senderId,
         text: data.text,
