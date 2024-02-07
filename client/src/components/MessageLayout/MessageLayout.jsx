@@ -239,9 +239,9 @@ const Coversation = ({
   }, []);
 
   useEffect(() => {
-    incoming &&
-      incoming.conversationId === id ?
-      setCurrentConversation((prev) => [...prev, incoming]):null
+    if(incoming?.conversationId=== id){
+      setCurrentConversation((prev) => [...prev, incoming]);
+    }
     //incoming &&
     //  conversation?.members.includes(incoming.sender) &&
     // setCurrentConversation((prev) => [...prev, incoming]);
