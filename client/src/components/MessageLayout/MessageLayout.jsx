@@ -225,15 +225,17 @@ const Coversation = ({
 }) => {
   const id = conversation?._id;
   const [incoming, setIncoming] = useState(null);
-   
+  const [text, setText] = useState("");
+  const [currentconversation, setCurrentConversation] = useState([]);
+
   useEffect(() => {
-    socket.on("getMessage", (data) => {      
+    socket.on("getMessage", (data) => {     
+      console.log('inc',incoming); 
       setIncoming({
         sender: data.senderId,
         text: data.text,
         createdAt: Date.now(),
       });
-      console.log('inc',incoming);
     });
   }, []);
     
@@ -245,12 +247,6 @@ const Coversation = ({
     
   }, [incoming, conversation]);
 
-  const { messages } = useSelector((state) => state.messages?.messages);
-  const [currentconversation, setCurrentConversation] = useState([]);
-  const [text, setText] = useState("");
- {/* useEffect(() => {
-    dispatch(getMessages(id));
-  }, [id]);*/}
   useEffect(() => {
     const getMessage = async () => {
       try {
@@ -365,9 +361,8 @@ const Coversation = ({
             className=" box 800px:px-1 h-[100vh] mb-[114px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
             ref={containerRef}
           >
-            {currentconversation?.map((message, index) => {
-              return (
-                <div key={index} className="my-1 justify-between">
+              
+                <div  className="my-1 justify-between">
                   {currentconversation &&
                     currentconversation.map((message, index) => {
                       const senderMessage = message.sender === me;
@@ -417,8 +412,7 @@ const Coversation = ({
                       );
                     })}
                 </div>
-              );
-            })}
+              
           </div>
           <div className="w-full 800px:flex items-center justify-center hidden 800px:left-[25%] right-0 py-2  bg-neutral-500">
             <form className="w-[95%] 800px:w-[70%] relative">
