@@ -257,9 +257,9 @@ const Coversation = ({
   useEffect(() => {
     dispatch(getMessages(id));
   }, [id]);
-  useEffect(() => {
-    setCurrentConversation([...(messages ? messages : [])]);
-  }, [messages, id]);
+//  useEffect(() => {
+  //  setCurrentConversation([...(messages ? messages : [])]);
+ // }, [messages, id]);
 
   useEffect(() => {
     // Check if containerRef.current is not null before setting scrollTop
@@ -291,7 +291,6 @@ const Coversation = ({
       )
       .then((res) => {
         setText("");
-        console.log(res.data);
       });
   };
   const handleChat = async (e) => {
