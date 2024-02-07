@@ -233,8 +233,8 @@ const Coversation = ({
         text: data.text,
         createdAt: Date.now(),
       });
+      console.log('inc',incoming);
     });
-    console.log('inc',incoming);
   }, []);
     
   
@@ -243,7 +243,7 @@ const Coversation = ({
     setCurrentConversation((prev)=>[...prev,incoming])
     console.log('current',currentconversation);
     
-  }, [incoming, id]);
+  }, [incoming, conversation]);
 
   const { messages } = useSelector((state) => state.messages?.messages);
   const [currentconversation, setCurrentConversation] = useState([]);
@@ -267,7 +267,7 @@ const Coversation = ({
       }
     };
     getMessage();
-  }, [conversation,id]);
+  }, [conversation]);
 
   useEffect(() => {
     // Check if containerRef.current is not null before setting scrollTop
