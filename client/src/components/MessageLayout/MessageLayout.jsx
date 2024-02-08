@@ -300,6 +300,14 @@ const Coversation = ({
         setText("");
       });
   };
+  const [menu,setMenu] = useState(false)
+  //handle menu i.e delete for everyone for me,react,reply
+  const handleMenu = (id) => {
+    setMenu((prevMenu) => ({
+      ...prevMenu,
+      [id]: !prevMenu[id] // Toggle the menu state for the clicked message
+    }));
+  };
   const handleChat = async (e) => {
     e.preventDefault();
     if (text === "") {
@@ -374,9 +382,11 @@ const Coversation = ({
                 {currentconversation &&
                   currentconversation.map((message, index) => {
                     const senderMessage = message.sender === me;
-
-                    return (
-                      <div key={index} className={`px-2 w-full`}>
+                    const messageId = message._id
+                   
+                                
+                    return (<>
+                      <div key={index} className={`px-2 w-full`} onContextMenu={()=>handleMenu(messageId)} >
                         <div
                           className={`${
                             senderMessage ? "justify-end" : "justify-start"
@@ -413,7 +423,14 @@ const Coversation = ({
                           )}
                         </div>
                       </div>
-                    );
+
+                      {/**menu popup */}
+                    {menu[messageId] && (
+        <div className="w-[60%] 800px:w-[35%] m-auto py-4 bg-gray-500">
+          <h1>Menu</h1>
+        </div>
+      )}  
+                   </> );
                   })}
               </div>
             </div>
