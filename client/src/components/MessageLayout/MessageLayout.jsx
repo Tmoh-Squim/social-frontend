@@ -426,12 +426,12 @@ const Coversation = ({
                             {message?.deletedForAll ? (
                               <>
                                 {senderMessage ? (
-                                  <p className="bg-neutral-500 rounded-xl w-max p-1 h-min">
-                                    you deleted this message
+                                  <p className="bg-neutral-500 rounded-xl italic w-max p-1 h-min">
+                                  <span className="text-red-500 w-[15px] h-[15px] rounded-full text-center">x</span>   You deleted this message
                                   </p>
                                 ) : (
-                                  <p className="bg-neutral-500 rounded-xl w-max p-1 h-min">
-                                    this message wasdeleted
+                                  <p className="bg-neutral-500 rounded-xl italic w-max p-1 h-min">
+                                  <span className="text-red-500 w-[15px]  h-[15px] rounded-full text-center">x</span>  This message was deleted
                                   </p>
                                 )}
                               </>
