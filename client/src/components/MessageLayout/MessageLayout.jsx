@@ -444,7 +444,7 @@ useEffect(() => {
 
                       {/**menu popup */}
                     {menu[messageId] && (
-                     <div className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 bg-neutral-500 flex flex-col rounded-t-xl" ref={menuRef}>
+                     <div className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 z-30 bg-neutral-500 flex flex-col rounded-t-xl" ref={menuRef}>
                      <div className="p-2 border-b border-gray-300 ">
 
                      </div>
@@ -452,16 +452,16 @@ useEffect(() => {
                       <div className="p-2 flex text-white cursor-pointer">
                         <p>Copy</p>
                       </div>
-                      <div className="p-2 flex mt-1 text-white cursor-pointer">
+                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
                         <p>Forward</p>
                       </div>
-                      <div className="p-2 flex mt-1 text-white cursor-pointer">
+                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
                         <p>Reply</p>
                       </div>
-                      <div className="p-2 flex mt-1 text-white cursor-pointer">
+                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
                         <p>Report</p>
                       </div>
-                      <div className="p-2 flex mt-1 text-white cursor-pointer">
+                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
                         <p>Delete for me</p>
                       </div>
                      </div>
