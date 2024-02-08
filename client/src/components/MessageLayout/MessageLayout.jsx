@@ -529,7 +529,7 @@ const Coversation = ({
                                         className="p-2 no-select flex mt-[2px] text-white cursor-pointer"
                                         onClick={() => handleDelete(messageId)}
                                       >
-                                        <p>Delete for all</p>
+                                        <p>Delete for everyone</p>
                                       </div>
                                     </div>
                                   </div>
