@@ -239,11 +239,10 @@ const Coversation = ({
   }, []);
 
   useEffect(() => {
-    if(incoming?.conversationId === id){
+    if (incoming?.conversationId === id) {
       setCurrentConversation((prev) => [...prev, incoming]);
     }
-    
-    
+
     //incoming &&
     //  conversation?.members.includes(incoming.sender) &&
     // setCurrentConversation((prev) => [...prev, incoming]);
@@ -300,31 +299,41 @@ const Coversation = ({
         setText("");
       });
   };
-  const [menu,setMenu] = useState(false)
+  const [menu, setMenu] = useState(false);
   const menuRef = useRef(null); // Ref to the menu element
-// Function to handle click events outside of the menu
-const handleClickOutside = (event) => {
-  if (menuRef.current && !menuRef.current.contains(event.target)) {
-    // Clicked outside the menu, so close it
-    setMenu({});
-  }
-};
-
-useEffect(() => {
-  // Add event listener when the component mounts
-  document.addEventListener("click", handleClickOutside);
-  return () => {
-    // Remove event listener when the component unmounts
-    document.removeEventListener("click", handleClickOutside);
+  // Function to handle click events outside of the menu
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      // Clicked outside the menu, so close it
+      setMenu({});
+    }
   };
-}, []);
+
+  useEffect(() => {
+    // Add event listener when the component mounts
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      // Remove event listener when the component unmounts
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   //handle menu i.e delete for everyone for me,react,reply
   const handleMenu = (id) => {
     setMenu((prevMenu) => ({
       ...prevMenu,
-      [id]: !prevMenu[id] // Toggle the menu state for the clicked message
+      [id]: !prevMenu[id], // Toggle the menu state for the clicked message
     }));
+  };
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.put(
+        `${ServerUrl}/v2/message/delete-for-all/${id}`
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   const handleChat = async (e) => {
     e.preventDefault();
@@ -400,74 +409,103 @@ useEffect(() => {
                 {currentconversation &&
                   currentconversation.map((message, index) => {
                     const senderMessage = message.sender === me;
-                    const messageId = message._id
-                   
-                                
-                    return (<>
-                      <div key={index} className={`px-2 w-full`} onContextMenu={()=>handleMenu(messageId)} >
+                    const messageId = message._id;
+
+                    return (
+                      <>
                         <div
-                          className={`${
-                            senderMessage ? "justify-end" : "justify-start"
-                          } flex w-full my-1.5 `}
+                          key={index}
+                          className={`px-2 w-full`}
+                          onContextMenu={() => handleMenu(messageId)}
                         >
-                          {senderMessage ? (
-                            <div className="flex flex-col w-[75%] 800px:w-[65%] justify-end items-end">
-                              <p
-                                className=" bg-blue-500 px-2 800px:py-1.5 py-1  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
-                                style={{ maxWidth: "fit-content" }}
-                              >
-                                {message.text}
-                              </p>
-                              <p className="text-end text-black">
-                                {format(
-                                  message?.createdAt ? message.createdAt : null
+                          <div
+                            className={`${
+                              senderMessage ? "justify-end" : "justify-start"
+                            } flex w-full my-1.5 `}
+                          >
+                            {message?.deletedForAll ? (
+                              <>
+                                {senderMessage ? (
+                                  <p className="bg-neutral-500 rounded-xl w-max p-1 h-min">
+                                    you deleted this message
+                                  </p>
+                                ) : (
+                                  <p className="bg-neutral-500 rounded-xl w-max p-1 h-min">
+                                    this message wasdeleted
+                                  </p>
                                 )}
-                              </p>
-                            </div>
-                          ) : (
-                            <div className="flex flex-col w-[75%] 800px:w-[65%]">
-                              <div
-                                className=" bg-[#66c428f5] py-1 px-2 font-500px text-[14px] 800px:text-[17px] text-white rounded-[14px] h-min inline-block"
-                                style={{ maxWidth: "fit-content" }}
-                              >
-                                {message.text}
-                              </div>
-                              <p className="text-start text-black">
-                                {format(
-                                  message?.createdAt ? message.createdAt : null
+                              </>
+                            ) : (
+                              <>
+                                {senderMessage ? (
+                                  <div className="flex flex-col w-[75%] 800px:w-[65%] justify-end items-end">
+                                    <p
+                                      className=" bg-blue-500 px-2 800px:py-1.5 py-1  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
+                                      style={{ maxWidth: "fit-content" }}
+                                    >
+                                      {message.text}
+                                    </p>
+                                    <p className="text-end text-black">
+                                      {format(
+                                        message?.createdAt
+                                          ? message.createdAt
+                                          : null
+                                      )}
+                                    </p>
+                                  </div>
+                                ) : (
+                                  <div className="flex flex-col w-[75%] 800px:w-[65%]">
+                                    <div
+                                      className=" bg-[#66c428f5] py-1 px-2 font-500px text-[14px] 800px:text-[17px] text-white rounded-[14px] h-min inline-block"
+                                      style={{ maxWidth: "fit-content" }}
+                                    >
+                                      {message.text}
+                                    </div>
+                                    <p className="text-start text-black">
+                                      {format(
+                                        message?.createdAt
+                                          ? message.createdAt
+                                          : null
+                                      )}
+                                    </p>
+                                  </div>
                                 )}
-                              </p>
-                            </div>
-                          )}
+                              </>
+                            )}
+                          </div>
                         </div>
-                      </div>
 
-                      {/**menu popup */}
-                    {menu[messageId] && (
-                     <div className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 z-30 bg-neutral-500 flex flex-col rounded-t-xl" ref={menuRef}>
-                     <div className="p-2 border-b border-gray-300 ">
-
-                     </div>
-                     <div className="px-2 pt-2 flex flex-col" >
-                      <div className="p-2 flex text-white cursor-pointer">
-                        <p>Copy</p>
-                      </div>
-                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
-                        <p>Forward</p>
-                      </div>
-                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
-                        <p>Reply</p>
-                      </div>
-                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
-                        <p>Report</p>
-                      </div>
-                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
-                        <p>Delete for me</p>
-                      </div>
-                     </div>
-                     </div>
-      )}  
-                   </> );
+                        {/**menu popup */}
+                        {menu[messageId] && (
+                          <div
+                            className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 z-30 bg-neutral-500 flex flex-col rounded-t-xl"
+                            ref={menuRef}
+                          >
+                            <div className="p-2 border-b border-gray-300 "></div>
+                            <div className="px-2 pt-2 flex flex-col">
+                              <div className="p-2 flex text-white cursor-pointer">
+                                <p>Copy</p>
+                              </div>
+                              <div className="p-2 flex mt-[2px] text-white cursor-pointer">
+                                <p>Forward</p>
+                              </div>
+                              <div className="p-2 flex mt-[2px] text-white cursor-pointer">
+                                <p>Reply</p>
+                              </div>
+                              <div className="p-2 flex mt-[2px] text-white cursor-pointer">
+                                <p>Report</p>
+                              </div>
+                              <div
+                                className="p-2 flex mt-[2px] text-white cursor-pointer"
+                                onClick={() => handleDelete(messageId)}
+                              >
+                                <p>Delete for me</p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    );
                   })}
               </div>
             </div>
@@ -494,7 +532,7 @@ useEffect(() => {
               </form>
             </div>
           </div>
-          <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-10 left-0 800px:left-[25%] right-0 py-2  bg-black">
+          <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-10 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
             <form className="w-[95%] 800px:w-[70%] relative">
               <input
                 type="text"
