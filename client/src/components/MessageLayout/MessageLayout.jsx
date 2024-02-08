@@ -301,6 +301,24 @@ const Coversation = ({
       });
   };
   const [menu,setMenu] = useState(false)
+  const menuRef = useRef(null); // Ref to the menu element
+// Function to handle click events outside of the menu
+const handleClickOutside = (event) => {
+  if (menuRef.current && !menuRef.current.contains(event.target)) {
+    // Clicked outside the menu, so close it
+    setMenu({});
+  }
+};
+
+useEffect(() => {
+  // Add event listener when the component mounts
+  document.addEventListener("click", handleClickOutside);
+  return () => {
+    // Remove event listener when the component unmounts
+    document.removeEventListener("click", handleClickOutside);
+  };
+}, []);
+
   //handle menu i.e delete for everyone for me,react,reply
   const handleMenu = (id) => {
     setMenu((prevMenu) => ({
@@ -426,9 +444,28 @@ const Coversation = ({
 
                       {/**menu popup */}
                     {menu[messageId] && (
-        <div className="w-[60%] 800px:w-[35%] m-auto py-4 bg-gray-500">
-          <h1>Menu</h1>
-        </div>
+                     <div className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 bg-neutral-500 flex flex-col rounded-t-xl" ref={menuRef}>
+                     <div className="p-2 border-b border-gray-300 ">
+
+                     </div>
+                     <div className="p-2 flex flex-col" >
+                      <div className="p-2 flex text-white cursor-pointer">
+                        <p>Copy</p>
+                      </div>
+                      <div className="p-2 flex mt-1 text-white cursor-pointer">
+                        <p>Forward</p>
+                      </div>
+                      <div className="p-2 flex mt-1 text-white cursor-pointer">
+                        <p>Reply</p>
+                      </div>
+                      <div className="p-2 flex mt-1 text-white cursor-pointer">
+                        <p>Report</p>
+                      </div>
+                      <div className="p-2 flex mt-1 text-white cursor-pointer">
+                        <p>Delete for me</p>
+                      </div>
+                     </div>
+                     </div>
       )}  
                    </> );
                   })}
