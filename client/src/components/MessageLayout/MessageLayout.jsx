@@ -31,6 +31,7 @@ const MessageLayout = () => {
   useEffect(() => {
     socket.emit("join", user?._id);
     socket.on("getUsers", (data) => {
+      console.log("on",data)
       setOnlineUsers(data);
     });
   }, []);
@@ -301,6 +302,7 @@ const Coversation = ({
   };
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null); // Ref to the menu element
+  const [deletedId,setDeletedId] = useState(null)
   // Function to handle click events outside of the menu
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -327,6 +329,7 @@ const Coversation = ({
   };
   const handleDelete = async (id) => {
     try {
+      socket.emit("delete-message",{id})
       const res = await axios
         .put(`${ServerUrl}/v2/message/delete-for-all/${id}`)
         .then(() => {
@@ -334,9 +337,16 @@ const Coversation = ({
         });
       console.log(res.data);
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
+  useEffect(() => {
+    socket.on("message-deleted",(data)=>{
+      setDeletedId(data)
+      
+    })
+  }, []);
+  
   const handleChat = async (e) => {
     e.preventDefault();
     if (text === "") {
@@ -425,17 +435,17 @@ const Coversation = ({
                               senderMessage ? "justify-end" : "justify-start"
                             } flex w-full my-1.5 `}
                           >
-                            {message?.deletedForAll ? (
+                            {message?.deletedForAll || message?._id === deletedId ? (
                               <>
                                 {senderMessage ? (
-                                  <p className="bg-neutral-500 rounded-[14px] italic w-max p-1 h-min no-select">
+                                  <p className="bg-neutral-500 rounded-[14px] italic w-max px-2 py-0.5 h-min no-select">
                                     <span className="text-red-500 w-[15px] h-[15px] rounded-full text-center">
                                       x
                                     </span>{" "}
                                     You deleted this message
                                   </p>
                                 ) : (
-                                  <p className="bg-neutral-500 rounded-[14px] italic w-max p-1 h-min no-select">
+                                  <p className="bg-neutral-500 rounded-[14px] italic w-max px-2 py-0.5 h-min no-select">
                                     <span className="text-red-500 w-[15px]  h-[15px] rounded-full text-center">
                                       x
                                     </span>{" "}
@@ -597,7 +607,7 @@ const Coversation = ({
               </form>
             </div>
           </div>
-          <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-10 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
+          <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-10 left-0 800px:left-[25%] right-0 py-1.5  bg-neutral-500">
             <form className="w-[95%] 800px:w-[70%] relative">
               <input
                 type="text"

@@ -102,7 +102,7 @@ const Login = () => {
             <p className="my-2 cursor-pointer">forgot password?</p>
             <p>
               don't have account?{" "}
-              <Link to="/" className="text-blue-600 font-semibold">
+              <Link to="/register" className="text-blue-600 font-semibold">
                 Create account
               </Link>
             </p>
