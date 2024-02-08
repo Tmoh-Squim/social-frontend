@@ -329,7 +329,10 @@ const Coversation = ({
     try {
       const res = await axios.put(
         `${ServerUrl}/v2/message/delete-for-all/${id}`
-      );
+      )
+      .then(()=>{
+        handleClickOutside('click')
+      })
       console.log(res.data);
     } catch (error) {
       console.log(error.message);
@@ -476,7 +479,27 @@ const Coversation = ({
                         </div>
 
                         {/**menu popup */}
-                        {menu[messageId] && (
+                        {menu[messageId]&&message.deletedForAll ? (
+                          <>
+                           {menu[messageId] && (
+                          <div
+                            className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-3 z-30 bg-neutral-500 flex flex-col rounded-t-xl"
+                            ref={menuRef}
+                          >
+                            <div className="px-2 pt-2 flex flex-col">
+                              <div
+                                className="flex mt-[2px] text-white cursor-pointer"
+                                onClick={() => handleDelete(messageId)}
+                              >
+                                <p>Delete for me</p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                          </>
+                        ):(
+                          <>
+                           {menu[messageId] && (
                           <div
                             className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 z-30 bg-neutral-500 flex flex-col rounded-t-xl"
                             ref={menuRef}
@@ -499,11 +522,14 @@ const Coversation = ({
                                 className="p-2 flex mt-[2px] text-white cursor-pointer"
                                 onClick={() => handleDelete(messageId)}
                               >
-                                <p>Delete for me</p>
+                                <p>Delete for all</p>
                               </div>
                             </div>
                           </div>
                         )}
+                          </>
+                        ) }
+                       
                       </>
                     );
                   })}
