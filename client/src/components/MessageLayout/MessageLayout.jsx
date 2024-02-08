@@ -448,7 +448,7 @@ useEffect(() => {
                      <div className="p-2 border-b border-gray-300 ">
 
                      </div>
-                     <div className="p-2 flex flex-col" >
+                     <div className="px-2 pt-2 flex flex-col" >
                       <div className="p-2 flex text-white cursor-pointer">
                         <p>Copy</p>
                       </div>
@@ -471,7 +471,7 @@ useEffect(() => {
                   })}
               </div>
             </div>
-            <div className="w-full 800px:flex items-center justify-center hidden 800px:left-[25%] right-0 py-2  bg-neutral-500">
+            <div className="w-full 800px:flex items-center justify-center hidden 800px:left-[25%] right-0 py-2  bg-black">
               <form className="w-[95%] 800px:w-[70%] relative">
                 <input
                   type="text"
@@ -494,7 +494,7 @@ useEffect(() => {
               </form>
             </div>
           </div>
-          <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-30 left-0 800px:left-[25%] right-0 py-2  bg-neutral-500">
+          <div className="w-full flex items-center justify-center 800px:hidden absolute bottom-0 z-10 left-0 800px:left-[25%] right-0 py-2  bg-black">
             <form className="w-[95%] 800px:w-[70%] relative">
               <input
                 type="text"
