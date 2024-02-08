@@ -16,3 +16,6 @@ scrollbar-width: none;
 .sidebar{
     scrollbar-width: none;
 }
+.no-select{
+    user-select: none;
+}

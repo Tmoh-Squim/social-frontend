@@ -327,12 +327,11 @@ const Coversation = ({
   };
   const handleDelete = async (id) => {
     try {
-      const res = await axios.put(
-        `${ServerUrl}/v2/message/delete-for-all/${id}`
-      )
-      .then(()=>{
-        handleClickOutside('click')
-      })
+      const res = await axios
+        .put(`${ServerUrl}/v2/message/delete-for-all/${id}`)
+        .then(() => {
+          handleClickOutside("click");
+        });
       console.log(res.data);
     } catch (error) {
       console.log(error.message);
@@ -429,12 +428,18 @@ const Coversation = ({
                             {message?.deletedForAll ? (
                               <>
                                 {senderMessage ? (
-                                  <p className="bg-neutral-500 rounded-[14px] italic w-max p-1 h-min">
-                                  <span className="text-red-500 w-[15px] h-[15px] rounded-full text-center">x</span>   You deleted this message
+                                  <p className="bg-neutral-500 rounded-[14px] italic w-max p-1 h-min no-select">
+                                    <span className="text-red-500 w-[15px] h-[15px] rounded-full text-center">
+                                      x
+                                    </span>{" "}
+                                    You deleted this message
                                   </p>
                                 ) : (
-                                  <p className="bg-neutral-500 rounded-[14px] italic w-max p-1 h-min">
-                                  <span className="text-red-500 w-[15px]  h-[15px] rounded-full text-center">x</span>  This message was deleted
+                                  <p className="bg-neutral-500 rounded-[14px] italic w-max p-1 h-min no-select">
+                                    <span className="text-red-500 w-[15px]  h-[15px] rounded-full text-center">
+                                      x
+                                    </span>{" "}
+                                    This message was deleted
                                   </p>
                                 )}
                               </>
@@ -443,7 +448,7 @@ const Coversation = ({
                                 {senderMessage ? (
                                   <div className="flex flex-col w-[75%] 800px:w-[65%] justify-end items-end">
                                     <p
-                                      className=" bg-blue-500 px-2 800px:py-1.5 py-1  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
+                                      className="no-select bg-blue-500 px-2 800px:py-1.5 py-1  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
                                       style={{ maxWidth: "fit-content" }}
                                     >
                                       {message.text}
@@ -459,7 +464,7 @@ const Coversation = ({
                                 ) : (
                                   <div className="flex flex-col w-[75%] 800px:w-[65%]">
                                     <div
-                                      className=" bg-[#66c428f5] py-1 px-2 font-500px text-[14px] 800px:text-[17px] text-white rounded-[14px] h-min inline-block"
+                                      className="no-select bg-[#66c428f5] py-1 px-2 font-500px text-[14px] 800px:text-[17px] text-white rounded-[14px] h-min inline-block"
                                       style={{ maxWidth: "fit-content" }}
                                     >
                                       {message.text}
@@ -479,57 +484,91 @@ const Coversation = ({
                         </div>
 
                         {/**menu popup */}
-                        {menu[messageId]&&message.deletedForAll ? (
+                        {menu[messageId] && message.deletedForAll ? (
                           <>
-                           {menu[messageId] && (
-                          <div
-                            className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-3 z-30 bg-neutral-500 flex flex-col rounded-t-xl"
-                            ref={menuRef}
-                          >
-                            <div className="px-2 pt-2 flex flex-col">
+                            {menu[messageId] && (
                               <div
-                                className="flex mt-[2px] text-white cursor-pointer"
-                                onClick={() => handleDelete(messageId)}
+                                className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-3 z-30 bg-neutral-500 flex flex-col rounded-t-xl"
+                                ref={menuRef}
                               >
-                                <p>Delete for me</p>
+                                <div className="px-2 pt-2 flex flex-col">
+                                  <div
+                                    className="no-select flex mt-[2px] text-white cursor-pointer"
+                                    onClick={() => handleDelete(messageId)}
+                                  >
+                                    <p>Delete for me</p>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        )}
+                            )}
                           </>
-                        ):(
+                        ) : (
                           <>
-                           {menu[messageId] && (
-                          <div
-                            className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 z-30 bg-neutral-500 flex flex-col rounded-t-xl"
-                            ref={menuRef}
-                          >
-                            <div className="p-2 border-b border-gray-300 "></div>
-                            <div className="px-2 pt-2 flex flex-col">
-                              <div className="p-2 flex text-white cursor-pointer">
-                                <p>Copy</p>
-                              </div>
-                              <div className="p-2 flex mt-[2px] text-white cursor-pointer">
-                                <p>Forward</p>
-                              </div>
-                              <div className="p-2 flex mt-[2px] text-white cursor-pointer">
-                                <p>Reply</p>
-                              </div>
-                              <div className="p-2 flex mt-[2px] text-white cursor-pointer">
-                                <p>Report</p>
-                              </div>
-                              <div
-                                className="p-2 flex mt-[2px] text-white cursor-pointer"
-                                onClick={() => handleDelete(messageId)}
-                              >
-                                <p>Delete for all</p>
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                            {menu[messageId] && message.sender === me ? (
+                              <>
+                                {menu[messageId] && (
+                                  <div
+                                    className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 z-30 bg-neutral-500 flex flex-col rounded-t-xl"
+                                    ref={menuRef}
+                                  >
+                                    <div className="p-2 border-b border-gray-300 "></div>
+                                    <div className="px-2 pt-2 flex flex-col">
+                                      <div className="p-2 no-select flex text-white cursor-pointer">
+                                        <p>Copy</p>
+                                      </div>
+                                      <div className="p-2 no-select flex mt-[2px] text-white cursor-pointer">
+                                        <p>Forward</p>
+                                      </div>
+                                      <div className="p-2 no-select flex mt-[2px] text-white cursor-pointer">
+                                        <p>Reply</p>
+                                      </div>
+                                      <div className="p-2 no-select flex mt-[2px] text-white cursor-pointer">
+                                        <p>Report</p>
+                                      </div>
+                                      <div
+                                        className="p-2 no-select flex mt-[2px] text-white cursor-pointer"
+                                        onClick={() => handleDelete(messageId)}
+                                      >
+                                        <p>Delete for all</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            ) : (
+                              <>
+                                {menu[messageId] && (
+                                  <div
+                                    className="w-full bottom-0 left-0 right-0 absolute 800px:w-[35%] m-auto py-4 z-30 bg-neutral-500 flex flex-col rounded-t-xl"
+                                    ref={menuRef}
+                                  >
+                                    <div className="p-2 border-b border-gray-300 "></div>
+                                    <div className="px-2 pt-2 flex flex-col">
+                                      <div className="p-2 flex text-white cursor-pointer">
+                                        <p>Copy</p>
+                                      </div>
+                                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
+                                        <p>Forward</p>
+                                      </div>
+                                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
+                                        <p>Reply</p>
+                                      </div>
+                                      <div className="p-2 flex mt-[2px] text-white cursor-pointer">
+                                        <p>Report</p>
+                                      </div>
+                                      <div
+                                        className="p-2 flex mt-[2px] text-white cursor-pointer"
+                                        onClick={() => handleDelete(messageId)}
+                                      >
+                                        <p>Delete for me</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            )}
                           </>
-                        ) }
-                       
+                        )}
                       </>
                     );
                   })}
