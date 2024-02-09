@@ -106,8 +106,8 @@ const SideBar = ({
     );
      const createConversation = async (receiver) => {
     try {
-      const groupTitle = user._id + receiver._id;
-      const senderId = user?._id;
+      const groupTitle = me + receiver._id;
+      const senderId = me;
       const receiverId = receiver?._id;
       const response = await axios.post(
         `${ServerUrl}/v2/conversation/create-new-conversation`,
