@@ -34,7 +34,6 @@ const MessageLayout = () => {
       setOnlineUsers(data);
     });
   }, []);
-  console.log('con',conversation);
 
   return (
     <>
@@ -98,7 +97,7 @@ const SideBar = ({
         >
           <AiOutlineArrowRight size={28} color="black" />
         </div>
-        <div className="flex flex-row px-1 overflow-x-scroll sidebar my-2">
+        <div className="flex flex-row px-1 overflow-x-scroll sidebar my-2 border-b border-gray-300">
 
 {
   otherUsers?.map((user,index)=>{
