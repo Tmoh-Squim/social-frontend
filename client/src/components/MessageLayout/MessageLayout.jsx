@@ -80,8 +80,8 @@ const SideBar = ({
   setActive,
   onlineUsers,
 }) => {
-  const otherUsers = users?.filter((members)=>members?._id !== me)
-  
+  const otherUsers = users?.filter((members) => members?._id !== me);
+
   return (
     <>
       <div
@@ -98,57 +98,62 @@ const SideBar = ({
           <AiOutlineArrowRight size={28} color="black" />
         </div>
         <div className="flex flex-row px-1 overflow-x-scroll sidebar my-2 border-b border-gray-300">
+          {otherUsers?.map((user, index) => {
+            const online = onlineUsers?.find(
+              (member) => member.userId === user._id
+            );
+            const createConversation = async (receiver) => {
+              try {
+                const groupTitle = me + receiver._id;
+                const senderId = me;
+                const receiverId = receiver?._id;
+                const response = await axios.post(
+                  `${ServerUrl}/v2/conversation/create-new-conversation`,
+                  {
+                    groupTitle: groupTitle,
+                    senderId: senderId,
+                    receiverId: receiverId,
+                  },
+                  {
+                    headers: {
+                      Authorization: `${localStorage.getItem("user-auth")}`,
+                    },
+                  }
+                );
+                const { conversation } = response.data;
+                setOpen(true);
+                setConversation(conversation);
+                setActive(null);
+              } catch (error) {
+                alert("something went wrong");
+                console.log(error);
+              }
+            };
 
-{
-  otherUsers?.map((user,index)=>{
-    const online = onlineUsers?.find(
-      (member) => member.userId === user._id
-    );
-     const createConversation = async (receiver) => {
-    try {
-      const groupTitle = me + receiver._id;
-      const senderId = me;
-      const receiverId = receiver?._id;
-      const response = await axios.post(
-        `${ServerUrl}/v2/conversation/create-new-conversation`,
-        {
-          groupTitle: groupTitle,
-          senderId: senderId,
-          receiverId: receiverId,
-        },
-        {
-          headers: {
-            Authorization: `${localStorage.getItem('user-auth')}`,
-          },
-        }
-      );
-      const {conversation}= response.data
-              setOpen(true);
-              setConversation(conversation);
-              setActive(null);
+            return (
+              <div
+                key={index}
+                className="mx-1.5 flex flex-col text-start"
+                onClick={() => createConversation(user)}
+              >
+                <div className="w-[50px] h-[50px] flex justify-center items-center relative bg-neutral-400 rounded-full cursor-pointer">
+                  <h2 className="text-black text-xl">{user.name[0]}</h2>
 
-    } catch (error) {
-      alert("something went wrong");
-      console.log(error);
-    }
-  };
-  
-
-    return(
-      <div key={index} className="mx-1 flex flex-col text-start" onClick={()=>createConversation(user)}>
-      <div className="w-[50px] h-[50px] flex justify-center items-center relative bg-neutral-400 rounded-full cursor-pointer">
-      <h2 className="text-black text-xl">{user.name[0]}</h2>
-
-      <div className={online ? 'w-[11px] h-[11px] absolute bottom-1.5 right-0 rounded-full bg-green-500' :null}></div>
-      </div>
-      <div>
-        <p className="text-white text-[12px]">{user?.username}</p>
-      </div>
-      </div>
-    )
-  })
-}
-          </div>
+                  <div
+                    className={
+                      online
+                        ? "w-[11px] h-[11px] absolute bottom-1.5 right-0 rounded-full bg-green-500"
+                        : null
+                    }
+                  ></div>
+                </div>
+                <div className="ml-1">
+                  <p className="text-white text-[12px]">{user?.username}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
         {conversations?.map((conversation, index) => {
           const otherMember = conversation?.members?.find(
@@ -355,7 +360,7 @@ const Coversation = ({
   };
   const [menu, setMenu] = useState(false);
   const menuRef = useRef(null); // Ref to the menu element
-  const [deletedId,setDeletedId] = useState(null)
+  const [deletedId, setDeletedId] = useState(null);
   // Function to handle click events outside of the menu
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -382,7 +387,7 @@ const Coversation = ({
   };
   const handleDelete = async (id) => {
     try {
-      socket.emit("delete-message",{id})
+      socket.emit("delete-message", { id });
       const res = await axios
         .put(`${ServerUrl}/v2/message/delete-for-all/${id}`)
         .then(() => {
@@ -394,12 +399,11 @@ const Coversation = ({
     }
   };
   useEffect(() => {
-    socket.on("message-deleted",(data)=>{
-      setDeletedId(data)
-      
-    })
+    socket.on("message-deleted", (data) => {
+      setDeletedId(data);
+    });
   }, []);
-  
+
   const handleChat = async (e) => {
     e.preventDefault();
     if (text === "") {
@@ -488,7 +492,8 @@ const Coversation = ({
                               senderMessage ? "justify-end" : "justify-start"
                             } flex w-full my-1.5 `}
                           >
-                            {message?.deletedForAll || message?._id === deletedId ? (
+                            {message?.deletedForAll ||
+                            message?._id === deletedId ? (
                               <>
                                 {senderMessage ? (
                                   <p className="bg-neutral-500 rounded-[14px] italic w-max px-2 py-0.5 h-min no-select">
