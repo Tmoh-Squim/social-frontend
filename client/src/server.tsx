@@ -1,4 +1,4 @@
-export const ServerUrli = "https://chatting-web-app-2xe3.onrender.com/api"
-export const SocketIdi = "https://chatting-socket-c5k9.onrender.com"
-export const ServerUrl = "http://localhost:8082/api"
-export const SocketId = "http://localhost:8080"
+export const ServerUrl = "https://chatting-web-app-2xe3.onrender.com/api"
+export const SocketId = "https://chatting-socket-c5k9.onrender.com"
+export const ServerUrli = "http://localhost:8082/api"
+export const SocketIdi = "http://localhost:8080"
