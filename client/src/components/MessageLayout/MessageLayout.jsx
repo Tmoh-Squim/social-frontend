@@ -31,10 +31,10 @@ const MessageLayout = () => {
   useEffect(() => {
     socket.emit("join", user?._id);
     socket.on("getUsers", (data) => {
-      console.log("on",data)
       setOnlineUsers(data);
     });
   }, []);
+  console.log('con',conversation);
 
   return (
     <>
@@ -81,6 +81,8 @@ const SideBar = ({
   setActive,
   onlineUsers,
 }) => {
+  const otherUsers = users?.filter((members)=>members?._id !== me)
+  
   return (
     <>
       <div
@@ -96,6 +98,58 @@ const SideBar = ({
         >
           <AiOutlineArrowRight size={28} color="black" />
         </div>
+        <div className="flex flex-row px-1 overflow-x-scroll sidebar my-2">
+
+{
+  otherUsers?.map((user,index)=>{
+    const online = onlineUsers?.find(
+      (member) => member.userId === user._id
+    );
+     const createConversation = async (receiver) => {
+    try {
+      const groupTitle = user._id + receiver._id;
+      const senderId = user?._id;
+      const receiverId = receiver?._id;
+      const response = await axios.post(
+        `${ServerUrl}/v2/conversation/create-new-conversation`,
+        {
+          groupTitle: groupTitle,
+          senderId: senderId,
+          receiverId: receiverId,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem('user-auth')}`,
+          },
+        }
+      );
+      const {conversation}= response.data
+              setOpen(true);
+              setConversation(conversation);
+              setActive(null);
+
+    } catch (error) {
+      alert("something went wrong");
+      console.log(error);
+    }
+  };
+  
+
+    return(
+      <div key={index} className="mx-1 flex flex-col text-start" onClick={()=>createConversation(user)}>
+      <div className="w-[50px] h-[50px] flex justify-center items-center relative bg-neutral-400 rounded-full cursor-pointer">
+      <h2 className="text-black text-xl">{user.name[0]}</h2>
+
+      <div className={online ? 'w-[11px] h-[11px] absolute bottom-1.5 right-0 rounded-full bg-green-500' :null}></div>
+      </div>
+      <div>
+        <p className="text-white text-[12px]">{user?.username}</p>
+      </div>
+      </div>
+    )
+  })
+}
+          </div>
 
         {conversations?.map((conversation, index) => {
           const otherMember = conversation?.members?.find(
@@ -414,7 +468,7 @@ const Coversation = ({
               </div>
             </div>
             <div
-              className=" box 800px:px-1 h-[100vh] mb-[112px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
+              className=" box 800px:px-1 h-[100vh] mb-[110px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
               ref={containerRef}
             >
               <div className="my-1 justify-between">
@@ -463,7 +517,7 @@ const Coversation = ({
                                     >
                                       {message.text}
                                     </p>
-                                    <p className="text-end text-black">
+                                    <p className="text-end no-select text-black">
                                       {format(
                                         message?.createdAt
                                           ? message.createdAt
@@ -479,7 +533,7 @@ const Coversation = ({
                                     >
                                       {message.text}
                                     </div>
-                                    <p className="text-start text-black">
+                                    <p className="text-start no-select text-black">
                                       {format(
                                         message?.createdAt
                                           ? message.createdAt
