@@ -12,7 +12,7 @@ import { io } from "socket.io-client";
 import axios from "axios";
 import { getConversations } from "../../redux/conversation";
 import { useNavigate } from "react-router-dom";
-
+import UserProfile from "../user/UserProfile";
 const socket = io(SocketId, { transports: ["websocket"] });
 const MessageLayout = () => {
   const { conversations } = useSelector(
@@ -81,23 +81,60 @@ const SideBar = ({
   onlineUsers,
 }) => {
   const otherUsers = users?.filter((members) => members?._id !== me);
+  const [query,setQuery] = useState("")
+  const [result,setResult] = useState(null)
 
+  useEffect(() => {
+     if(query !==""){
+      const res = users?.filter((user)=>user?.name.toLowerCase().includes(query.toLowerCase()))
+      setResult(res)
+     }else{
+      setResult(null)
+     }
+     console.log(result);
+     
+  }, [query]);  
+  
   return (
     <>
+    {
+      result && (
+<div className="absolute top-[28%] py-2 px-2 z-30 h-[50vh] w-[25%] bg-neutral-900" >
+
+{
+  result?.map((user,index)=>{
+    return(<div key={index} className="cursor-pointer">
+        <div className="justify-center flex items-center w-[40px] h-[40px] rounded-full bg-neutral-500">
+          {user.name[0]}
+        </div>
+        <h2 className="text-white">
+          {user.username}
+        </h2>
+    </div>)
+  })
+}
+          </div>
+      )
+    }
+      
+
       <div
         className={`${
           open === true
-            ? "hidden 800px:w-[25%] 800px:block sidebar h-screen px-2 fixed bg-neutral-500"
-            : "sidebar h-screen 800px:w-[25%] w-full bg-neutral-500 px-2 fixed   800px:block"
+            ? "hidden 800px:w-[25%] 800px:block sidebar h-screen px-2 fixed bg-neutral-900"
+            : "sidebar h-screen 800px:w-[25%] w-full bg-neutral-900 px-2 fixed   800px:block"
         }`}
       >
-        <div
-          className="w-full items-end justify-end flex 800px:hidden cursor-pointer"
-          onClick={() => navigate("/")}
-        >
-          <AiOutlineArrowRight size={28} color="black" />
+        <div className="flex justify-between items-center w-full">
+          <h2 className="text-white text-2xl">Chats</h2>
+          <AiOutlineArrowRight
+            size={28}
+            color="white"
+            className=" 800px:hidden cursor-pointer"
+            onClick={() => navigate("/")}
+          />
         </div>
-        <div className="flex flex-row px-1 overflow-x-scroll sidebar my-2 border-b border-gray-300">
+        <div className="flex flex-row  overflow-x-scroll sidebar my-4 border-b border-gray-300">
           {otherUsers?.map((user, index) => {
             const online = onlineUsers?.find(
               (member) => member.userId === user._id
@@ -155,6 +192,21 @@ const SideBar = ({
           })}
         </div>
 
+        <div className="px-2 my-2 hidden 800px:block">
+          <div>
+            <input
+              type="search"
+              name="search"
+              id=""
+              value={query}
+              onChange={(e)=>setQuery(e.target.value)}
+              placeholder="search or start conversation"
+              className="outline-none border-b w-full h-[40px] bg-transparent"
+              style={{ color: "white" }}
+            />
+          </div>
+        </div>
+
         {conversations?.map((conversation, index) => {
           const otherMember = conversation?.members?.find(
             (member) => member != me
@@ -207,8 +259,8 @@ const SideBar = ({
                     <div className="block ml-0.5">
                       <p className="text-white text-[14px]">{receiver.name}</p>
                       <div className="flex">
-                        <p className="mx-1">You:</p>
-                        <p className="text-center text-gray-700">
+                        <p className="mx-1 text-slate-300">You:</p>
+                        <p className="text-center text-slate-300">
                           {lastMessage?.length > 13
                             ? lastMessage.slice(0, 13) + "..."
                             : lastMessage}
@@ -218,7 +270,7 @@ const SideBar = ({
                   ) : (
                     <div className="block ml-0.5 text-start">
                       <p className="text-white text-[14px]">{receiver.name}</p>
-                      <p className=" text-gray-700 ">
+                      <p className=" text-slate-300 ">
                         {lastMessage?.length > 13
                           ? lastMessage.slice(0, 13) + "..."
                           : lastMessage}
@@ -228,7 +280,7 @@ const SideBar = ({
                 </div>
               ) : (
                 <div className="flex items-center justify-start cursor-pointer">
-                  <div className="w-[50px] h-[50px] flex rounded-full relative bg-gray-500 justify-center items-center">
+                  <div className="w-[50px] h-[50px] flex rounded-full relative bg-slate-300 justify-center items-center">
                     <h3 className="text-xl text-black text-center">
                       {receiver?.name[0]}
                     </h3>
@@ -244,8 +296,8 @@ const SideBar = ({
                     <div className="block ml-0.5">
                       <p className="text-white text-[14px]">{receiver?.name}</p>
                       <div className="flex">
-                        <p className="mx-1">You:</p>
-                        <p className="text-center text-gray-700">
+                        <p className="mx-1 text-slate-300">You:</p>
+                        <p className="text-center text-slate-300">
                           {lastMessage?.length > 13
                             ? lastMessage.slice(0, 13) + "..."
                             : lastMessage}
@@ -255,7 +307,7 @@ const SideBar = ({
                   ) : (
                     <div className="block ml-0.5 text-start">
                       <p className="text-white text-[14px]">{receiver?.name}</p>
-                      <p className=" text-gray-700 ">
+                      <p className=" text-slate-300 ">
                         {lastMessage?.length > 13
                           ? lastMessage.slice(0, 13) + "..."
                           : lastMessage}
@@ -404,6 +456,9 @@ const Coversation = ({
     });
   }, []);
 
+  const handleProfile = (receiver) => {
+    navigate(`/profile/${receiver?._id}`);
+  };
   const handleChat = async (e) => {
     e.preventDefault();
     if (text === "") {
@@ -439,12 +494,15 @@ const Coversation = ({
           <div
             className={`${
               open === true
-                ? "h-screen sidebar 800px:ml-[25%] 800px:w-[75%] w-full 800px:fixed bg-neutral-100 justify-between  flex flex-col"
-                : "h-screen sidebar 800px:ml-[25%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed  bg-neutral-100 justify-between  flex flex-col"
+                ? "h-screen sidebar 800px:ml-[25.1%] 800px:w-[75%] w-full 800px:fixed bg-neutral-100 justify-between  flex flex-col"
+                : "h-screen sidebar 800px:ml-[25.1%] ml-[25%] 800px:w-[75%] w-[75%] 800px:fixed  bg-neutral-100 justify-between  flex flex-col"
             }`}
           >
             <div className="w-full bg-blue-500 px-2 justify-between py-2 items-center flex">
-              <div className="bg-neutral-400 w-[50px] h-[50px] rounded-full relative justify-center">
+              <div
+                className="bg-neutral-400 w-[50px] h-[50px] rounded-full relative justify-center cursor-pointer"
+                onClick={() => handleProfile(receiver)}
+              >
                 <h2 className="text-xl text-center font-bold text-green-600">
                   {receiver.name[0]}
                 </h2>
@@ -642,7 +700,7 @@ const Coversation = ({
                   })}
               </div>
             </div>
-            <div className="w-full 800px:flex items-center justify-center hidden 800px:left-[25%] right-0 py-2  bg-black">
+            <div className="w-full 800px:flex items-center justify-center hidden 800px:left-[25%] right-0 py-2  bg-neutral-900">
               <form className="w-[95%] 800px:w-[70%] relative">
                 <input
                   type="text"

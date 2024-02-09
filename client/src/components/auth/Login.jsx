@@ -7,7 +7,6 @@ import {useSelector} from "react-redux"
 import {ServerUrl} from "../../server.tsx"
 const Login = () => {
   const {user} = useSelector((state)=>state.user)
-  console.log('ldd',user);
   
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -44,10 +43,10 @@ const Login = () => {
     
   };
   return (
-    <div className="h-screen py-4 w-full bg-neutral-200 px-2 ">
+    <div className="h-screen py-4 w-full px-2 bg-neutral-900">
       <div className=" w-full h-screen flex justify-center items-center ">
-        <form className="w-full 800px:w-[40%] mt-5 bg-white py-5 px-1">
-          <h2 className="text-2xl text-black font-bold text-center">
+        <form className="w-full 800px:w-[40%] mt-5 bg-black py-5 px-1 rounded-md">
+          <h2 className="text-2xl text-white font-bold text-center">
             Welcome Back!
           </h2>
           <div className="mt-2 flex flex-col">
@@ -59,7 +58,7 @@ const Login = () => {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border px-2 rounded-lg my-1 border-black h-[45px] placeholder-black"
+              className="border px-2 rounded-md my-1 border-black outline-none h-[45px] placeholder-black"
               placeholder="Enter your email"
             />
           </div>
@@ -72,7 +71,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               name="password"
-              className="border px-2 rounded-lg my-1 placeholder-black border-black h-[45px]"
+              className="border px-2 rounded-md my-1 placeholder-black border-black outline-none h-[45px]"
               placeholder="Enter your password"
             />
             {visible === true ? (
@@ -100,7 +99,7 @@ const Login = () => {
 
           <div className="flex flex-col">
             <p className="my-2 cursor-pointer">forgot password?</p>
-            <p>
+            <p className="text-white">
               don't have account?{" "}
               <Link to="/register" className="text-blue-600 font-semibold">
                 Create account

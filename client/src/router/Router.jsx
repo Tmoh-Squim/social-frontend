@@ -5,12 +5,14 @@ import Register from "../components/auth/Register"
 
 import Layout from "../components/layout/Layout"
 import MessageLayout from "../components/MessageLayout/MessageLayout"
+import UserProfile from "../components/user/UserProfile"
 const Router = () => {
   return <>
     <Routes>
       <Route path="/" element={<Layout />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/profile/:id" element={<UserProfile />} />
       <Route path="/conversations" element={<MessageLayout />} />
     </Routes>
   </>;
