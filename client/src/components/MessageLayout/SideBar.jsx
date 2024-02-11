@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { AiOutlineArrowRight,AiOutlineSearch,AiOutlineArrowLeft } from "react-icons/ai";
 import { ServerUrl, SocketId, Server } from "../../server.tsx";
 import { io } from "socket.io-client";
 import axios from "axios";
@@ -19,7 +19,10 @@ const SideBar = ({
   const otherUsers = users?.filter((members) => members?._id !== me);
   const [query, setQuery] = useState("");
   const [result, setResult] = useState(null);
+  const [search,setSearch] = useState(false)
   const [deletedId, setDeletedId] = useState(null);
+  const [data,setData] = useState("")
+  const [searchData,setSearchData] = useState("")
 
   useEffect(() => {
     if (query !== "") {
@@ -27,10 +30,22 @@ const SideBar = ({
         user?.name.toLowerCase().includes(query.toLowerCase())
       );
       setResult(res);
+      
     } else {
       setResult(null);
     }
   }, [query]);
+  useEffect(() => {
+    if (data !== "") {
+      const res = users?.filter((user) =>
+        user?.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchData(res);
+      
+    } else {
+      setSearchData(null);
+    }
+  }, [data]);
   const res = result?.filter((users) => users._id !== me);
 
   useEffect(() => {
@@ -39,8 +54,140 @@ const SideBar = ({
     });
   }, []);
 
+  const handleSearch = () =>{
+    setSearch(true)
+  }
+
   return (
     <>
+    {/**mobile phone search */}
+    {
+      search === true ? (
+        <div className="w-full 800px:hidden h-screen bg-neutral-900 absolute py-2 top-0 left-0 right-0 z-30 px-2">
+          <div className="flex items-center">
+            <AiOutlineArrowLeft size={28} color="white" className="cursor-pointer" onClick={()=>setSearch(false)} />
+            <h1 className="text-white text-xl ml-6 ">Search or create conversation</h1>
+          </div>
+
+          <div>
+            <div>
+          <input
+              type="search"
+              name="search"
+              id=""
+              value={data}
+              onChange={(e) => setData(e.target.value)}
+              placeholder="search or start conversation"
+              className="outline-none border-b w-full mt-6 h-[40px] bg-transparent"
+              style={{ color: "white" }}
+            />
+          </div>
+
+          {
+            searchData?.map((user,index)=>{
+              return (
+                <div key={index} className="my-2">
+                  <div>
+                    {
+                      user?.avatar ? (
+                        <div className="flex items-center">
+                        <div className="w-[40px] text-xl font-semibold h-[40px] bg-neutral-500 rounded-full items-center flex justify-center">
+                      <img src={`${user?.avatar}`} alt="" className="w-full h-full rounded-full" />
+                    </div>
+                    <div className="ml-2">
+                      <p className="text-white no-select">
+                      {user?.name}
+                      </p>
+                    </div>
+                    </div>
+                      ):(
+                        <div className="flex items-center">
+                        <div className="w-[40px] text-xl font-semibold h-[40px] bg-neutral-500 rounded-full items-center flex justify-center">
+                      {user?.name[0]}
+                    </div>
+                    <div className="ml-2">
+                      <p className="text-white">
+                        {user?.name}
+                      </p>
+                    </div>
+                    </div>
+                      )
+                    }
+                  </div>
+                </div>
+              )
+            })
+          }
+
+        {
+          !searchData && (
+            <>
+            <h1 className="text-white mt-4">
+              Recent conversation
+            </h1>
+            {
+            conversations?.slice(0,10).map((conversation,index)=>{
+              const otherMember = conversation?.members?.find((member)=>member !==me)
+              const receiver = users?.find((user)=>user._id === otherMember)
+              return (
+                <div className="my-2 cursor-pointer"  key={index}>
+                  {
+                    receiver?.avatar? (
+                      <div className="flex items-center">
+                      <div className="w-[45px] h-[45px] bg-neutral-500 rounded-full flex justify-center items-center">
+                    <img src={`${receiver.avatar}`} alt="" className="w-full h-full rounded-full" />
+                    </div>
+
+                    <div className="mx-2 text-neutral-400">
+                      {
+                        conversation?.lastMessageId === me? (
+                          <p>
+                       You: {conversation?.lastMessage}
+                      </p>
+                        ):(
+                          <p>
+                        {conversation?.lastMessage}
+                      </p>
+                        )
+                      }
+                    </div>
+                  </div>
+                    ):(
+                      <div className="flex items-center">
+                      <div className="w-[45px] text-xl font-semibold  h-[45px] bg-neutral-500 rounded-full flex justify-center items-center">
+                   {receiver.name[0]}
+                    </div>
+
+                    <div className="mx-2 text-neutral-400">
+                      {
+                        conversation?.lastMessageId === me? (
+                          <p>
+                       You: {conversation?.lastMessage}
+                      </p>
+                        ):(
+                          <p>
+                        {conversation?.lastMessage}
+                      </p>
+                        )
+                      }
+                    </div>
+                  </div>
+                    )
+                  }
+                  
+                </div>
+              )
+            })
+          }
+            </>
+          )
+        }
+          </div>
+        </div>
+      ):null
+    }
+
+    {/**desktop search */}
       {result && (
         <div className="absolute top-[25%] py-2 px-2 z-30 h-[50vh] w-[25%] bg-neutral-900">
           {res?.map((user, index) => {
@@ -74,6 +221,7 @@ const SideBar = ({
                 console.log(error);
               }
             };
+            
             return (
               <div
                 key={index}
@@ -123,7 +271,12 @@ const SideBar = ({
         }`}
       >
         <div className="flex justify-between items-center w-full">
-          <h2 className="text-white text-2xl no-select">Chats</h2>
+          <div className="flex items-center">
+            <div className="cursor-pointer" onClick={handleSearch}>
+            <AiOutlineSearch size={25} color="white" className="800px:hidden" />
+            </div>
+          <h2 className="text-white text-2xl no-select ml-6 800px:ml-0">Chats</h2>
+          </div>    
           <AiOutlineArrowRight
             size={28}
             color="white"
