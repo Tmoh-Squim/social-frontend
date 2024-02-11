@@ -9,11 +9,11 @@ import UserProfile from "../components/user/UserProfile"
 const Router = () => {
   return <>
     <Routes>
-      <Route path="/conversations" element={<Layout />} />
+      <Route path="/" element={<Layout />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/profile/:id" element={<UserProfile />} />
-      <Route path="/" element={<MessageLayout />} />
+      <Route path="/conversations" element={<MessageLayout />} />
     </Routes>
   </>;
 };
