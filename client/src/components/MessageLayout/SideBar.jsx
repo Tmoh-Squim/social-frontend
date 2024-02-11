@@ -22,7 +22,7 @@ const SideBar = ({
   const [search,setSearch] = useState(false)
   const [deletedId, setDeletedId] = useState(null);
   const [data,setData] = useState("")
-  const [searchData,setSearchData] = useState("")
+  const [searchData,setSearchData] = useState(null)
 
   useEffect(() => {
     if (query !== "") {
