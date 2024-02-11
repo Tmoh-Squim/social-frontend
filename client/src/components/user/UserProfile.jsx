@@ -177,12 +177,12 @@ const UserProfile = () => {
           </>
         )}
       </div>
-      {open === true ? <Profile member={member} setOpen={setOpen} /> : null}
+      {open === true ? <Profile member={member} setOpen={setOpen} me={me} /> : null}
     </>
   );
 };
 
-const Profile = ({ member, setOpen }) => {
+const Profile = ({ member, setOpen,me }) => {
   const [phone, setPhone] = useState(member?.phone);
   const [email] = useState(member?.email);
   const [name, setName] = useState(member?.name);
@@ -190,7 +190,7 @@ const Profile = ({ member, setOpen }) => {
 
   const handleSubmit = async()=>{
     try {
-      const response = await axios.put(`${ServerUrl}/v1/auth/update-profile/${member?._id}`,{
+      const response = await axios.put(`${ServerUrl}/v1/auth/update-profile/${me}`,{
         phone,
         name,
         username
