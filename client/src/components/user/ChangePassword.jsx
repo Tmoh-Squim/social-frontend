@@ -19,10 +19,14 @@ const ChangePassword = () => {
           newPassword:password
         })
         if(response.data.success){
+          setPass("")
+          setPassword("")
+          setOldPass("")
           toast.success(response.data.message)
         }else{
           toast.error(response.data.message)
         }
+        
       } catch (error) {
         toast.error("Something went wrong")
       }
