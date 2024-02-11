@@ -149,7 +149,7 @@ const UserProfile = () => {
           <>
             <div className=" my-2 w-full 800px:px-2">
               <div className="bg-blue-500 rounded-md flex mx-auto cursor-pointer 800px:mx-0 justify-center py-1.5 px-6 w-[95%] 800px:w-[40%] items-center">
-                <h2 className="text-white font-semibold">+ Add a post</h2>
+                <h2 className="text-white font-semibold no-select">+ Add a post</h2>
               </div>
 
               <div
@@ -161,7 +161,9 @@ const UserProfile = () => {
 
               <div
                 className="mt-2 bg-neutral-500 py-1.5 w-[95%] cursor-pointer mx-auto 800px:mx-0 800px:w-[40%] px-6 rounded-md justify-center items-center flex "
-                onClick={() => navigate(`/profile-change-password/${member?._id}`)}
+                onClick={() =>
+                  navigate(`/profile-change-password/${member?._id}`)
+                }
               >
                 <h2 className="text-white font-semibold">Change Password</h2>
               </div>
@@ -177,36 +179,41 @@ const UserProfile = () => {
           </>
         )}
       </div>
-      {open === true ? <Profile member={member} setOpen={setOpen} me={me} /> : null}
+      {open === true ? (
+        <Profile member={member} setOpen={setOpen} me={me} />
+      ) : null}
     </>
   );
 };
 
-const Profile = ({ member, setOpen,me }) => {
+const Profile = ({ member, setOpen, me }) => {
   const [phone, setPhone] = useState(member?.phone);
   const [email] = useState(member?.email);
   const [name, setName] = useState(member?.name);
   const [username, setUsername] = useState(member?.username);
 
-  const handleSubmit = async()=>{
+  const handleSubmit = async () => {
     try {
-      const response = await axios.put(`${ServerUrl}/v1/auth/update-profile/${me}`,{
-        phone,
-        name,
-        username
-      })
-      if(response.data.success){
-        toast.success(response.data.message)
-        setPhone(response.data.phone)
-        setName(response.data.name)
-        setUsername(response.data.username)
-      }else{
-        toast.error(response.data.message)
+      const response = await axios.put(
+        `${ServerUrl}/v1/auth/update-profile/${me}`,
+        {
+          phone,
+          name,
+          username,
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setPhone(response.data.phone);
+        setName(response.data.name);
+        setUsername(response.data.username);
+      } else {
+        toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("Something went wrong")
+      toast.error("Something went wrong");
     }
-  }
+  };
 
   return (
     <div className="sidebar px-2 bg-neutral-900 py-2 absolute h-screen overflow-y-scroll top-0 left-0 right-0 w-full z-30 block 800px:flex 800px:px-6 800px:items-center ">
@@ -236,15 +243,15 @@ const Profile = ({ member, setOpen,me }) => {
                 className="w-full h-full rounded-full"
               />
               <div className="absolute bottom-2 800px:right-1 border-[1px] border-slate-200 right-0 cursor-pointer 800px:w-[30px] 800px:h-[30px] w-[40px] h-[40px] rounded-full flex justify-center items-center p-1 bg-black">
-                      <label htmlFor="avatar">
-                        {" "}
-                        <AiOutlineCamera
-                          size={25}
-                          color="white"
-                          className="cursor-pointer"
-                        />{" "}
-                      </label>
-                    </div>
+                <label htmlFor="avatar">
+                  {" "}
+                  <AiOutlineCamera
+                    size={25}
+                    color="white"
+                    className="cursor-pointer"
+                  />{" "}
+                </label>
+              </div>
             </div>
           ) : (
             <div className="w-[140px] border-[2px] border-green-500 relative h-[140px] bg-neutral-500 justify-center items-center flex rounded-full mt-4">
@@ -252,15 +259,15 @@ const Profile = ({ member, setOpen,me }) => {
                 {member.name[0]}
               </h2>
               <div className="absolute bottom-2 800px:right-1 border-[1px] border-slate-200 right-0 cursor-pointer 800px:w-[30px] 800px:h-[30px] w-[40px] h-[40px] rounded-full flex justify-center items-center p-1 bg-black">
-                      <label htmlFor="avatar">
-                        {" "}
-                        <AiOutlineCamera
-                          size={25}
-                          color="white"
-                          className="cursor-pointer"
-                        />{" "}
-                      </label>
-                    </div>
+                <label htmlFor="avatar">
+                  {" "}
+                  <AiOutlineCamera
+                    size={25}
+                    color="white"
+                    className="cursor-pointer"
+                  />{" "}
+                </label>
+              </div>
             </div>
           )}
         </div>
@@ -316,12 +323,14 @@ const Profile = ({ member, setOpen,me }) => {
             />
           </div>
 
-          <div className="bg-[tomato] px-4 py-2 rounded-lg my-3 w-max cursor-pointer" onClick={handleSubmit}>
+          <div
+            className="bg-[tomato] px-4 py-2 rounded-lg my-3 w-max cursor-pointer"
+            onClick={handleSubmit}
+          >
             <h1 className="text-white text-xl font-semibold">Update</h1>
           </div>
         </form>
       </div>
-     
     </div>
   );
 };
