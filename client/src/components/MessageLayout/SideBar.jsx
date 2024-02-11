@@ -123,7 +123,7 @@ const SideBar = ({
         }`}
       >
         <div className="flex justify-between items-center w-full">
-          <h2 className="text-white text-2xl">Chats</h2>
+          <h2 className="text-white text-2xl no-select">Chats</h2>
           <AiOutlineArrowRight
             size={28}
             color="white"
