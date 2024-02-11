@@ -335,7 +335,7 @@ const SideBar = ({
                   {receiver?.avatar ? (
                     <div className="w-[50px] h-[50px] flex border-gray-400 border-[1.7px] rounded-full relative bg-slate-300 justify-center items-center">
                       <img
-                        src={`${Server}/${receiver?.avatar}`}
+                        src={`${receiver?.avatar}`}
                         alt=""
                         className="w-full h-full rounded-full"
                       />
