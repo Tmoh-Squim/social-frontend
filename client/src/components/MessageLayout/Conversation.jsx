@@ -207,7 +207,7 @@ const Coversation = ({
                     onClick={() => handleProfile(receiver)}
                   >
                     <img
-                      src={`${Server}/${receiver?.avatar}`}
+                      src={`${receiver?.avatar}`}
                       alt=""
                       className="w-full h-full rounded-full"
                     />
@@ -227,7 +227,7 @@ const Coversation = ({
                         onClick={() => handleProfile(receiver)}
                       >
                         <img
-                          src={`${Server}/${receiver?.avatar}`}
+                          src={`${receiver?.avatar}`}
                           alt=""
                           className="w-full h-full rounded-full"
                         />

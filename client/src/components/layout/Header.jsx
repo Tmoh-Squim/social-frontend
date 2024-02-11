@@ -51,8 +51,8 @@ const Header = () => {
               className="800px:w-[40px] relative 800px:h-[40px] cursor-pointer w-[45px] h-[45px] rounded-full flex justify-center items-center bg-neutral-500"
               onClick={() => navigate(`/profile/${user?._id}`)}
             >
-              <img src={`${Server}/${user?.avatar}`} alt="" className="w-full h-full rounded-full" />
-              <div className="w-[12px] h-[12px] bg-green-500 absolute bottom-1 right-0 rounded-full"></div>
+              <img src={`${user?.avatar}`} alt="" className="w-full h-full rounded-full" />
+              <div className="w-[12px] h-[12px] bg-green-500 border-[1.8px] border-black absolute bottom-1 right-0 rounded-full"></div>
             </div>
             ):(
               <div
@@ -60,7 +60,7 @@ const Header = () => {
               onClick={() => navigate(`/profile/${user?._id}`)}
             >
               <h1 className="text-white">{user?.name[0]}</h1>
-              <div className="w-[12px] h-[12px] bg-green-500 absolute bottom-1 right-0 rounded-full"></div>
+              <div className="w-[12px] h-[12px] bg-green-500 border-[1.8px] border-black absolute bottom-1 right-0 rounded-full"></div>
             </div>
             )
           }

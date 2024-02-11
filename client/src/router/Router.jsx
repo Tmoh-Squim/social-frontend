@@ -6,6 +6,7 @@ import Register from "../components/auth/Register"
 import Layout from "../components/layout/Layout"
 import MessageLayout from "../components/MessageLayout/MessageLayout"
 import UserProfile from "../components/user/UserProfile"
+import ChangePassword from "../components/user/ChangePassword"
 const Router = () => {
   return <>
     <Routes>
@@ -13,6 +14,7 @@ const Router = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/profile/:id" element={<UserProfile />} />
+      <Route path="/profile-change-password/:id" element={<ChangePassword />} />
       <Route path="/conversations" element={<MessageLayout />} />
     </Routes>
   </>;
