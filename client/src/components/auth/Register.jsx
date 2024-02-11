@@ -32,9 +32,9 @@ function Register() {
     }
   return (
     <>
-      <div className="flex justify-center items-center px-2 800px:px-5 h-screen w-full bg-neutral-900">
+      <div className="flex justify-center items-center px-2 800px:px-5 h-screen w-full overflow-y-scroll sidebar bg-neutral-900">
         <div
-          className="w-full 800px:w-[38%] px-4 flex flex-col bg-black py-4"
+          className="w-full 800px:w-[38%] px-2 800px:px-4 flex flex-col bg-black py-4"
         >
           <div className="mt-2">
             <h2 className="text-2xl text-white text-center">
