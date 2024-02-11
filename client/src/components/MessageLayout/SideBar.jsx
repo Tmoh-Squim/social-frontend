@@ -91,7 +91,7 @@ const SideBar = ({
                     {
                       user?.avatar ? (
                         <div className="flex items-center">
-                        <div className="w-[40px] text-xl font-semibold h-[40px] bg-neutral-500 rounded-full items-center flex justify-center">
+                        <div className="800px:w-[40px] text-xl font-semibold 800px:h-[40px] h-[45px] w-[45px]  bg-neutral-500 rounded-full items-center flex justify-center">
                       <img src={`${user?.avatar}`} alt="" className="w-full h-full rounded-full" />
                     </div>
                     <div className="ml-2">
@@ -102,7 +102,7 @@ const SideBar = ({
                     </div>
                       ):(
                         <div className="flex items-center">
-                        <div className="w-[40px] text-xl font-semibold h-[40px] bg-neutral-500 rounded-full items-center flex justify-center">
+                        <div className="800px:w-[40px] w-[45px] text-xl font-semibold 800px:h-[40px] h-[45px] bg-neutral-500 rounded-full items-center flex justify-center">
                       {user?.name[0]}
                     </div>
                     <div className="ml-2">
