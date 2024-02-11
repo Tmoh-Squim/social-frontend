@@ -24,7 +24,7 @@ const Header = () => {
             type="search"
             name="search"
             placeholder="Search..."
-            className="rounded-lg h-[45px] outline-none mx-2 w-[90%] px-3"
+            className="rounded-lg h-[45px] hidden 800px:block outline-none mx-2 w-[90%] px-3"
           />
           <AiOutlineSearch
             size={30}
