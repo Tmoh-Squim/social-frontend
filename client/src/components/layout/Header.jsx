@@ -7,6 +7,7 @@ import {
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import {Server} from "../../server.tsx"
 const Header = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user?.user);
@@ -43,15 +44,28 @@ const Header = () => {
             color="black"
             className="mx-2 cursor-pointer"
           />
-          {user ? (
-            <div
-              className="800px:w-[40px] relative 800px:h-[40px] cursor-pointer w-[50px] h-[50px] rounded-full flex justify-center items-center bg-neutral-500"
+          {user ? (<>
+          {
+            user?.avatar ? (
+              <div
+              className="800px:w-[40px] relative 800px:h-[40px] cursor-pointer w-[45px] h-[45px] rounded-full flex justify-center items-center bg-neutral-500"
+              onClick={() => navigate(`/profile/${user?._id}`)}
+            >
+              <img src={`${Server}/${user?.avatar}`} alt="" className="w-full h-full rounded-full" />
+              <div className="w-[12px] h-[12px] bg-green-500 absolute bottom-1 right-0 rounded-full"></div>
+            </div>
+            ):(
+              <div
+              className="800px:w-[40px] relative 800px:h-[40px] cursor-pointer w-[45px] h-[45px] rounded-full flex justify-center items-center bg-neutral-500"
               onClick={() => navigate(`/profile/${user?._id}`)}
             >
               <h1 className="text-white">{user?.name[0]}</h1>
               <div className="w-[12px] h-[12px] bg-green-500 absolute bottom-1 right-0 rounded-full"></div>
             </div>
-          ) : (
+            )
+          }
+            
+         </> ) : (
             <AiOutlineUser
               size={30}
               color="black"

@@ -145,8 +145,16 @@ const UserProfile = () => {
 };
 
 const Profile = ({ member, setOpen }) => {
+  const [phone,setPhone] = useState(member?.phone)
+  const [email,setEmail] = useState(member?.email)
+  const [name,setName] = useState(member?.name)
+  const [username,setUsername] = useState(member?.username)
+  const [pass,setPass] = useState("")
+  const [password,setPassword] = useState("")
+  const [oldPass,setOldPass] = useState("")
   return (
-    <div className="px-2 bg-neutral-900 py-2 absolute h-screen top-0 left-0 right-0 w-full z-30 ">
+    <div className="px-2 bg-neutral-900 py-2 absolute h-screen overflow-y-scroll sidebar top-0 left-0 right-0 w-full z-30 block 800px:flex 800px:justify-center 800px:items-center ">
+      <div className="800px:w-[50%]">
       <div className="flex items-center border-b py-2 border-gray-400">
         <AiOutlineArrowLeft
           size={25}
@@ -164,11 +172,66 @@ const Profile = ({ member, setOpen }) => {
           </h1>
         </div>
 
-        <div className="w-[140px] h-[140px] bg-neutral-500 justify-center items-center flex rounded-full mt-4">
-          <h2 className="text-black text-3xl font-semibold">
-            {member.name[0]}
-          </h2>
+        {
+          member?.avatar ? (
+            <div className="w-[140px] h-[140px] bg-neutral-500 justify-center items-center flex rounded-full mt-4">
+            <img src={`${Server}/${member?.avatar}`} alt="" className="w-full h-full rounded-full" />
+          </div>
+          ):(
+            <div className="w-[140px] h-[140px] bg-neutral-500 justify-center items-center flex rounded-full mt-4">
+            <h2 className="text-black text-3xl font-semibold">
+              {member.name[0]}
+            </h2>
+          </div>
+          )
+        }
+       
+      </div>
+      <h2 className="text-white text-2xl text-center mt-6 800px:text-start">Personal Details</h2>
+      <form  className="mt-2">
+        <div className="flex flex-col">
+        <label htmlFor="name" className="text-white">Full name :</label>
+        <input type="text" name="name" value={name} onChange={(e)=>setName(e.target.value)} className="h-[40px] w-full pl-4 font-semibold text-black outline-none 800px:w-[80%] rounded-lg" />
         </div>
+        <div className="my-2 flex flex-col">
+        <label htmlFor="email" className="text-white">Email address :</label>
+        <input type="email" name="email" value={email} className="h-[40px] w-full pl-4 font-semibold text-black outline-none 800px:w-[80%] rounded-lg" />
+        </div>
+        <div className="flex flex-col">
+        <label htmlFor="username" className="text-white">Username :</label>
+        <input type="text" name="username" value={username} onChange={(e)=>setUsername(e.target.value)} className="h-[40px] w-full pl-4 font-semibold text-black outline-none 800px:w-[80%] rounded-lg" />
+        </div>
+        <div className="flex flex-col">
+        <label htmlFor="phone" className="text-white">Phone number :</label>
+        <input type="number" name="phone" value={phone} onChange={(e)=>setPhone(e.target.value)} className="h-[40px] w-full pl-4 font-semibold text-black outline-none 800px:w-[80%] rounded-lg" />
+        </div>
+
+        <div className="bg-[tomato] px-4 py-2 rounded-lg mt-3 w-max cursor-pointer">
+        <h1 className="text-white text-xl font-semibold">Update</h1>
+        </div>
+      </form>
+      </div>
+      <div className="800px:px-3 my-2 800px:w-[50%]">
+        <h1 className="text-white font-semibold">Change Password</h1>
+
+        <form  className="mt-2">
+        <div className="my-2 flex flex-col">
+        <label htmlFor="password" className="text-white">Enter new password :</label>
+        <input type="password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)} className="h-[40px] w-full pl-4 font-semibold text-black outline-none 800px:w-[80%] rounded-lg" />
+        </div>
+        <div className="flex flex-col">
+        <label htmlFor="pass" className="text-white">Confirm new password :</label>
+        <input type="password" name="pass" value={pass} onChange={(e)=>setPass(e.target.value)} className="h-[40px] w-full pl-4 font-semibold text-black outline-none 800px:w-[80%] rounded-lg" />
+        </div>
+        <div className="flex flex-col">
+        <label htmlFor="old-pass" className="text-white">Enter old password :</label>
+        <input type="old-pass" name="phone" value={oldPass} onChange={(e)=>setOldPass(e.target.value)} className="h-[40px] w-full pl-4 font-semibold text-black outline-none 800px:w-[80%] rounded-lg" />
+        </div>
+
+        <div className="bg-[tomato] px-4 py-2 rounded-lg mt-3 w-max cursor-pointer">
+        <h1 className="text-white text-xl font-semibold">Update</h1>
+        </div>
+      </form>
       </div>
     </div>
   );
