@@ -13,7 +13,7 @@ const ChangePassword = () => {
         if(pass !== password){
           return toast.error("New password doesn't match")
         }
-        const response = await axios.put(`${ServerUrl}/v2/auth/update-password/${id}`,{
+        const response = await axios.put(`${ServerUrl}/v1/auth/update-password/${id}`,{
           password:oldPass,
           newPassword:password
         })

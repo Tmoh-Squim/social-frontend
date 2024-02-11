@@ -190,7 +190,7 @@ const Profile = ({ member, setOpen }) => {
 
   const handleSubmit = async()=>{
     try {
-      const response = await axios.put(`${ServerUrl}/v2/auth/update-profile${member?._id}`,{
+      const response = await axios.put(`${ServerUrl}/v1/auth/update-profile${member?._id}`,{
         phone,
         name,
         username
