@@ -275,7 +275,7 @@ const Coversation = ({
                 </div>
               </div>
               <div
-                className=" box 800px:px-1 h-[100vh] mb-[110px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
+                className=" box sidebar 800px:px-1 h-[100vh] mb-[110px] 800px:mb-0 overflow-y-scroll overflow-x-hidden"
                 ref={containerRef}
               >
                 <div className="my-1 justify-between">
