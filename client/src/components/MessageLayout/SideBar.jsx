@@ -263,7 +263,7 @@ const SideBar = ({
               {active === index ? (
                 <div className="flex items-center cursor-pointer bg-[#0000002d] rounded-lg">
                   {receiver?.avatar ? (
-                    <div className="w-[50px] h-[50px] flex rounded-full border-gray-400 border-[1.7px] rela tive bg-gray-500 justify-center items-center">
+                    <div className="w-[50px] h-[50px] flex rounded-full border-gray-400 border-[1.7px] relative bg-gray-500 justify-center items-center">
                       <img
                         src={`${receiver?.avatar}`}
                         alt=""
