@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <>
       <div className="bg-blue-400 w-full justify-center items-center flex py-3 px-2">
-        <div className="w-[60%] relative flex">
+        <div className="w-[60%] relative flex items-center">
           <AiOutlineBars
             size={30}
             color="black"
@@ -32,7 +32,7 @@ const Header = () => {
             className="mx-2 absolute right-2 top-2"
           />
         </div>
-        <div className="flex justify-end w-[40%]">
+        <div className="flex justify-end items-center w-[40%]">
           <AiOutlineMessage
             size={30}
             className="cursor-pointer mx-2"
