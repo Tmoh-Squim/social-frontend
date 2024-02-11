@@ -223,7 +223,7 @@ const Profile = ({ member, setOpen,me }) => {
         <div className="flex flex-col justify-center 800px:justify-start 800px:items-start items-center mt-4">
           <div className="flex justify-between w-full items-center">
             <h1 className="ml-6 text-white font-semibold">Profile picture</h1>
-            <h1 className="ml-6 text-blue-500 font-semibold cursor-pointer">
+            <h1 className="ml-6 text-blue-500 font-semibold cursor-pointer no-select">
               Edit{" "}
             </h1>
           </div>
