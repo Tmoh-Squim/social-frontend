@@ -29,7 +29,7 @@ const Header = () => {
           <AiOutlineSearch
             size={30}
             color="black"
-            className="mx-2 absolute right-2 top-2"
+            className="mx-2 absolute hidden 800px:block right-2 top-2"
           />
         </div>
         <div className="flex justify-end items-center w-[70%] 800px:w-[40%]">
@@ -42,7 +42,7 @@ const Header = () => {
           <AiOutlineSearch
             size={30}
             color="black"
-            className="mx-2 cursor-pointer"
+            className="mx-2 cursor-pointer 800px:hidden"
           />
           {user ? (<>
           {
