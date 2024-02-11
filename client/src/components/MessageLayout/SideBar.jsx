@@ -301,8 +301,8 @@ const SideBar = ({
                         incoming === true ? (
                           <p className="text-center text-neutral-400 text-[14px]">
                             You:{" "}
-                            {lastMessage?.length > 20
-                              ? lastMessage.slice(0, 20) + "..."
+                            {lastMessage?.length > 23
+                              ? lastMessage.slice(0, 23) + "..."
                               : lastMessage}
                           </p>
                         ) : (
@@ -318,8 +318,8 @@ const SideBar = ({
                       {(conversation?.deleted !== true && !con) ||
                       incoming === true ? (
                         <p className=" text-neutral-400 text-[14px] ">
-                          {lastMessage?.length > 20
-                            ? lastMessage.slice(0, 20) + "..."
+                          {lastMessage?.length > 23
+                            ? lastMessage.slice(0, 23) + "..."
                             : lastMessage}
                         </p>
                       ) : (
@@ -371,8 +371,8 @@ const SideBar = ({
                         incoming === true ? (
                           <p className="text-center text-neutral-400 text-[14px]">
                             You:{" "}
-                            {lastMessage?.length > 20
-                              ? lastMessage.slice(0, 20) + "..."
+                            {lastMessage?.length > 23
+                              ? lastMessage.slice(0, 23) + "..."
                               : lastMessage}
                           </p>
                         ) : (
@@ -388,8 +388,8 @@ const SideBar = ({
                       {(conversation?.deleted !== true && !con) ||
                       incoming === true ? (
                         <p className=" text-neutral-400 text-[14px] ">
-                          {lastMessage?.length > 20
-                            ? lastMessage.slice(0, 20) + "..."
+                          {lastMessage?.length > 23
+                            ? lastMessage.slice(0, 23) + "..."
                             : lastMessage}
                         </p>
                       ) : (
