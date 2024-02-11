@@ -29,7 +29,7 @@ export const loadAllUsers = createAsyncThunk('load-users',async()=>{
 
 const initialState={
     user:{},
-    loading:false,
+    loading:true,
     error:null
 }
 

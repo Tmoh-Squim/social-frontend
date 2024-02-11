@@ -1,7 +1,7 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
 import axios from "axios"
 import {ServerUrl} from "../server.tsx"
-export const getConversations = createAsyncThunk('get-conversations',async(id)=>{
+export const getConversations = createAsyncThunk('conversations',async(id)=>{
     try {
         const response = await axios.get(`${ServerUrl}/v2/conversation/user-conversation/${id}`,{
             headers:{

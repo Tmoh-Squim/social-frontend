@@ -1,7 +1,7 @@
 import "./App.css"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import React,{useEffect} from "react";
+import React,{useEffect,useState} from "react";
 import {useSelector} from "react-redux"
 import store from "./redux/store"
 import Router from "./router/Router"
@@ -9,14 +9,17 @@ import {loadUser,loadAllUsers} from "./redux/user"
 import {getConversations} from "./redux/conversation"
 import {io} from "socket.io-client"
 import {SocketId} from "./server.tsx"
-
+import {useNavigate} from "react-router-dom"
+import Login from "./components/auth/Login"
 const socket = io(SocketId,{transports:["websocket"]})
 
 const App = () => {
   const user = useSelector((state)=>state.user?.user?.user)
+  const navigate=useNavigate()
   useEffect(() => {
     store.dispatch(loadUser())
   }, [store]);
+  const [active,setActive] = useState(false)
   
   useEffect(() => {
     const id = user?._id
@@ -24,11 +27,27 @@ const App = () => {
     store.dispatch(getConversations(id))
     store.dispatch(loadAllUsers())
   }, [user]);
-  
+ {/* useEffect(() => {    
+    setTimeout(() => {
+      if(!user){
+        navigate('/login')
+      }
+    }, 3000);
+  }, [user]);*/}
+
+{
+  setTimeout(() => {
+    setActive(true)
+  }, 2000);
+}
   
   return( <>
     <ToastContainer />
-    <Router />
+    {
+      active &&(
+        <Router />
+      )
+    }
   </>);
 };
 

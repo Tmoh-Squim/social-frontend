@@ -20,7 +20,7 @@ const Login = () => {
   }, [user]);
   const handleLogin = async () => {
     if (password === "" || email === "") {
-      return alert("please fill in all details");
+      return toast.error("please fill in all details");
     }
     try {
       const res = await axios.post(`${ServerUrl}/v1/auth/login`, {
@@ -34,6 +34,7 @@ const Login = () => {
       localStorage.setItem('user-auth',token)
       toast.success(res.data.message);
       navigate("/");
+      window.location.reload()
       }
       
     } catch (error) {
@@ -45,7 +46,7 @@ const Login = () => {
   return (
     <div className="h-screen py-4 w-full px-2 bg-neutral-900">
       <div className=" w-full h-screen flex justify-center items-center ">
-        <form className="w-full 800px:w-[40%] mt-5 bg-black py-5 px-1 rounded-md">
+        <form className="w-full 800px:w-[40%] mt-5 bg-black py-5 px-2 rounded-md">
           <h2 className="text-2xl text-white font-bold text-center">
             Welcome Back!
           </h2>
@@ -98,7 +99,7 @@ const Login = () => {
           </div>
 
           <div className="flex flex-col">
-            <p className="my-2 cursor-pointer">forgot password?</p>
+            <p className="my-2 cursor-pointer text-white">forgot password?</p>
             <p className="text-white">
               don't have account?{" "}
               <Link to="/register" className="text-blue-600 font-semibold">

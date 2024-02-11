@@ -32,17 +32,17 @@ function Register() {
     }
   return (
     <>
-      <div className="flex justify-center items-center px-2 800px:px-5 h-screen w-full bg-slate-100">
+      <div className="flex justify-center items-center px-2 800px:px-5 h-screen w-full bg-neutral-900">
         <div
-          className="w-full 800px:w-[35%] px-2 flex flex-col bg-white py-4"
+          className="w-full 800px:w-[38%] px-4 flex flex-col bg-black py-4"
         >
           <div className="mt-2">
-            <h2 className="text-2xl text-black text-center">
+            <h2 className="text-2xl text-white text-center">
               Create New Account
             </h2>
           </div>
           <div className="flex flex-col">
-            <label htmlFor="name">Enter Full Name</label>
+            <label className="text-slate-200" htmlFor="name">Enter Full Name</label>
             <input
               type="text"
               name="name"
@@ -51,11 +51,11 @@ function Register() {
               required
               value={name}
               onChange={(e)=>setName(e.target.value)}
-              className="border w-full px-3 my-3 border-black h-[45px] rounded-lg"
+              className="border w-full px-3 my-3 border-black h-[45px] outline-none text-black rounded-lg"
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="username">Enter Your Username</label>
+            <label className="text-slate-200" htmlFor="username">Enter Your Username</label>
             <input
               type="text"
               name="username"
@@ -64,11 +64,11 @@ function Register() {
               onChange={(e)=>setUserName(e.target.value)}
               placeholder="Enter user name"
               required
-              className="border w-full px-3 my-3 border-black h-[45px] rounded-lg"
+              className="border w-full px-3 my-3 border-black h-[45px] outline-none text-black rounded-lg"
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="email">Enter Your Email</label>
+            <label className="text-slate-200" htmlFor="email">Enter Your Email</label>
             <input
               type="email"
               name="email"
@@ -77,12 +77,12 @@ function Register() {
               id=""
               placeholder="Enter your email"
               required
-              className="border w-full px-3 my-3 border-black h-[45px] rounded-lg"
+              className="border w-full px-3 my-3 border-black h-[45px] outline-none text-black rounded-lg"
             />
           </div>
           <div className="flex flex-col">
             <div>
-            <label htmlFor="password">Enter Password</label>
+            <label className="text-slate-200" htmlFor="password">Enter Password</label>
             </div>
             <div className="relative">
             <input
@@ -93,7 +93,7 @@ function Register() {
               onChange={(e)=>setPassword(e.target.value)}
               id=""
               required
-              className="border w-full px-3 my-3 border-black h-[45px] rounded-lg"
+              className="border w-full px-3 my-3 border-black h-[45px] outline-none text-black rounded-lg"
             />
             <div className="absolute right-2 top-5 cursor-pointer">
                 {
@@ -109,7 +109,7 @@ function Register() {
           </div>
           <div className="flex flex-col">
             <div>
-            <label htmlFor="password">Confirm Password</label>
+            <label className="text-slate-200" htmlFor="password">Confirm Password</label>
             </div>
             <div className="relative">
             <input
@@ -120,7 +120,7 @@ function Register() {
               name="confirm-password"
               id=""
               required
-              className="border w-full px-3 my-3 border-black h-[45px] rounded-lg"
+              className="border w-full px-3 my-3 border-black h-[45px] outline-none text-black rounded-lg"
             />
             <div className="absolute right-2 top-5 cursor-pointer">
                 {
@@ -137,7 +137,7 @@ function Register() {
           <button type="submit" onClick={handleSubmit} className="p-2 bg-red-500 rounded-lg w-[30%] my-2 mx-2">
             <h2 className="text-xl text-white font-semibold text-center">Submit</h2>
           </button>
-          <p>already have an account? <Link to="/login" className="text-blue-500">Login</Link></p> 
+          <h2 className="text-white">already have an account? <Link to="/login" className="text-blue-500">Login</Link></h2> 
         </div>
       </div>
     </>
