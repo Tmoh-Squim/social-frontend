@@ -48,7 +48,7 @@ const Header = () => {
           {
             user?.avatar ? (
               <div
-              className="800px:w-[40px] relative 800px:h-[40px] cursor-pointer w-[45px] h-[45px] rounded-full flex justify-center items-center bg-neutral-500"
+              className="800px:w-[40px] relative 800px:h-[40px] cursor-pointer w-[50px] h-[50px] rounded-full flex justify-center items-center bg-neutral-500"
               onClick={() => navigate(`/profile/${user?._id}`)}
             >
               <img src={`${user?.avatar}`} alt="" className="w-full h-full rounded-full" />
