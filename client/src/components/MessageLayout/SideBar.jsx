@@ -48,6 +48,8 @@ const SideBar = ({
   }, [data]);
   const res = result?.filter((users) => users._id !== me);
 
+  const mapData = searchData?.filter((users) => users._id !== me);
+
   useEffect(() => {
     socket.on("message-deleted", (data) => {
       setDeletedId(data.conversationId);
@@ -84,7 +86,7 @@ const SideBar = ({
           </div>
 
           {
-            searchData?.map((user,index)=>{
+            mapData?.map((user,index)=>{
               return (
                 <div key={index} className="my-2">
                   <div>
