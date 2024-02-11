@@ -209,7 +209,7 @@ const Profile = ({ member, setOpen,me }) => {
   }
 
   return (
-    <div className="px-2 bg-neutral-900 py-2 absolute h-screen overflow-y-scroll top-0 left-0 right-0 w-full z-30 block 800px:flex 800px:px-6 800px:items-center ">
+    <div className="sidebar px-2 bg-neutral-900 py-2 absolute h-screen overflow-y-scroll top-0 left-0 right-0 w-full z-30 block 800px:flex 800px:px-6 800px:items-center ">
       <div className="800px:w-[50%] mb-[3rem] 800px:mb-0">
         <div className="flex items-center border-b py-2 border-gray-400">
           <AiOutlineArrowLeft
