@@ -72,7 +72,7 @@ const UserProfile = () => {
                 className="cursor-pointer"
                 onClick={() => navigate("/")}
               />
-              <h2 className="text-white font-semibold ml-4 text-[18px]">
+              <h2 className="text-white font-semibold ml-4 text-[18px] no-select">
                 {member?.name}
               </h2>
             </div>
