@@ -38,7 +38,7 @@ const SideBar = ({
   useEffect(() => {
     if (data !== "") {
       const res = users?.filter((user) =>
-        user?.name.toLowerCase().includes(query.toLowerCase())
+        user?.name.toLowerCase().includes(data.toLowerCase())
       );
       setSearchData(res);
       
