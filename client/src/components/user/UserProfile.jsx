@@ -184,9 +184,29 @@ const UserProfile = () => {
 
 const Profile = ({ member, setOpen }) => {
   const [phone, setPhone] = useState(member?.phone);
-  const [email, setEmail] = useState(member?.email);
+  const [email] = useState(member?.email);
   const [name, setName] = useState(member?.name);
   const [username, setUsername] = useState(member?.username);
+
+  const handleSubmit = async()=>{
+    try {
+      const response = await axios.put(`${ServerUrl}/v2/auth/update-profile${member?._id}`,{
+        phone,
+        name,
+        username
+      })
+      if(response.data.success){
+        toast.success(response.data.message)
+        setPhone(response.data.phone)
+        setName(response.data.name)
+        setUsername(response.data.username)
+      }else{
+        toast.error(response.data.message)
+      }
+    } catch (error) {
+      toast.error("Something went wrong")
+    }
+  }
 
   return (
     <div className="px-2 bg-neutral-900 py-2 absolute h-screen overflow-y-scroll top-0 left-0 right-0 w-full z-30 block 800px:flex 800px:px-6 800px:items-center ">
@@ -268,7 +288,6 @@ const Profile = ({ member, setOpen }) => {
               type="email"
               name="email"
               value={email}
-              onChange={(e)=>setEmail(e.target.value)}
               className="h-[40px] w-full pl-4 font-semibold text-black outline-none 800px:w-[80%] rounded-lg"
             />
           </div>
@@ -297,7 +316,7 @@ const Profile = ({ member, setOpen }) => {
             />
           </div>
 
-          <div className="bg-[tomato] px-4 py-2 rounded-lg my-3 w-max cursor-pointer">
+          <div className="bg-[tomato] px-4 py-2 rounded-lg my-3 w-max cursor-pointer" onClick={handleSubmit}>
             <h1 className="text-white text-xl font-semibold">Update</h1>
           </div>
         </form>
