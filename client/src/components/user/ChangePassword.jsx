@@ -2,13 +2,13 @@ import React,{useState} from "react";
 import axios from "axios"
 import {toast} from "react-toastify"
 import {ServerUrl} from "../../server.tsx"
+import {useParams} from "react-router-dom"
 import {useSelector} from "react-redux"
 const ChangePassword = () => {
     const [pass, setPass] = useState("");
     const [password, setPassword] = useState("");
     const [oldPass, setOldPass] = useState("");
-    const {user} = useSelector((state)=>state.user?.user)
-    const {id} = user?._id
+    const id = useParams()
     const handleSubmit = async()=>{
       try {
         if(pass !== password){
