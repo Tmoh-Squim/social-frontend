@@ -297,7 +297,7 @@ const Profile = ({ member, setOpen }) => {
             />
           </div>
 
-          <div className="bg-[tomato] px-4 py-2 rounded-lg mt-3 w-max cursor-pointer">
+          <div className="bg-[tomato] px-4 py-2 rounded-lg my-3 w-max cursor-pointer">
             <h1 className="text-white text-xl font-semibold">Update</h1>
           </div>
         </form>
