@@ -66,7 +66,7 @@ const SideBar = ({
         <div className="w-full 800px:hidden h-screen bg-neutral-900 absolute py-2 top-0 left-0 right-0 z-30 px-2">
           <div className="flex items-center">
             <AiOutlineArrowLeft size={28} color="white" className="cursor-pointer" onClick={()=>setSearch(false)} />
-            <h1 className="text-white text-xl ml-6 ">Search or create conversation</h1>
+            <h1 className="text-white text-xl ml-6 ">Search conversation</h1>
           </div>
 
           <div>
