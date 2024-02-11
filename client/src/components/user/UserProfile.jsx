@@ -78,7 +78,7 @@ const UserProfile = () => {
             </div>
             {id === me && (
               <div>
-                <h1 className="text-blue-600 text-[18px]">Add Profile</h1>
+                <h1 className="text-blue-600 text-[18px] no-select">Add Profile</h1>
               </div>
             )}
           </div>

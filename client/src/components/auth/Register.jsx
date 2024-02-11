@@ -4,8 +4,10 @@ import {useNavigate,Link} from 'react-router-dom'
 import axios from "axios"
 import {toast} from "react-toastify"
 import {ServerUrl} from "../../server.tsx"
+import {useSelector} from "react-redux"
 function Register() {
     const [visible,setVisible] = useState(false)
+    const {user} = useSelector((state)=>state.user)
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
     const [username,setUserName] = useState('')
@@ -30,6 +32,11 @@ function Register() {
       }
       
     }
+    useEffect(() => {
+      if (user?.user){
+        navigate('/')
+      }
+    }, [user]);
   return (
     <>
       <div className="flex justify-center items-center px-2 800px:px-5 h-screen w-full overflow-y-scroll sidebar bg-neutral-900">
