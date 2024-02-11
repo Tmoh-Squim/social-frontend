@@ -161,7 +161,7 @@ const UserProfile = () => {
 
               <div
                 className="mt-2 bg-neutral-500 py-1.5 w-[95%] cursor-pointer mx-auto 800px:mx-0 800px:w-[40%] px-6 rounded-md justify-center items-center flex "
-                onClick={() => navigate(`/profile-change-password/${member._id}`)}
+                onClick={() => navigate(`/profile-change-password/${member?._id}`)}
               >
                 <h2 className="text-white font-semibold">Change Password</h2>
               </div>
@@ -190,7 +190,7 @@ const Profile = ({ member, setOpen }) => {
 
   const handleSubmit = async()=>{
     try {
-      const response = await axios.put(`${ServerUrl}/v1/auth/update-profile${member?._id}`,{
+      const response = await axios.put(`${ServerUrl}/v1/auth/update-profile/${member?._id}`,{
         phone,
         name,
         username
