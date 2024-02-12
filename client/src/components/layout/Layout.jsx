@@ -8,13 +8,24 @@ import {getConversations} from "../../redux/conversation"
 const Layout = () => {
   const user = useSelector((state)=>state.user?.user?.user)
   const navigate = useNavigate()
- {/* useEffect(() => {
-    setTimeout(() => {
-      if(!user){
-        navigate('/login')
-      }
-    }, 8000);
-  }, []);*/}
+  useEffect(() => {
+    user? (
+      setTimeout(() => {
+        setActive(true)
+      }, 3000)
+    ):(
+        null
+    )
+    
+  }, [user]);
+  useEffect(() => {
+    !user? (
+      setTimeout(() => {
+        navigate("/login")
+        setActive(true)
+      }, 3000)
+    ):(null)
+  }, [user]);
   
   return <>
   <Header />

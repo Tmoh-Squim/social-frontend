@@ -39,14 +39,21 @@ useEffect(() => {
   user? (
     setTimeout(() => {
       setActive(true)
-    }, 5000)
+    }, 3000)
   ):(
-      setTimeout(() => {
-        navigate("/login")
-      }, 1000)
+      null
   )
   
 }, [user]);
+useEffect(() => {
+  !user? (
+    setTimeout(() => {
+      navigate("/login")
+      setActive(true)
+    }, 6000)
+  ):(null)
+}, [user]);
+
 
   
   return( <>
