@@ -35,17 +35,31 @@ const App = () => {
     }, 3000);
   }, [user]);*/}
 
-{
-  setTimeout(() => {
-    setActive(true)
-  }, 2000);
-}
+useEffect(() => {
+  user? (
+    setTimeout(() => {
+      setActive(true)
+    }, 5000)
+  ):(
+      setTimeout(() => {
+        navigate("/login")
+      }, 1000)
+  )
+  
+}, [user]);
+
   
   return( <>
     <ToastContainer />
     {
-      active &&(
+      active ?(
         <Router />
+      ):(
+        <div className="flex h-screen w-full items-center justify-center">
+          <h1>
+            Loading please wait...
+          </h1>
+        </div>
       )
     }
   </>);

@@ -36,6 +36,11 @@ const SideBar = ({
     }
   }, [query]);
   useEffect(() => {
+    console.log('first',conversations);
+    
+  }, [conversations]);
+  
+  useEffect(() => {
     if (data !== "") {
       const res = users?.filter((user) =>
         user?.name.toLowerCase().includes(data.toLowerCase())
@@ -128,7 +133,7 @@ const SideBar = ({
               Recent conversation
             </h1>
             {
-            conversations?.slice(0,10).map((conversation,index)=>{
+            conversations?.length > 0 && conversations?.slice(0,10).map((conversation,index)=>{
               const otherMember = conversation?.members?.find((member)=>member !==me)
               const receiver = users?.find((user)=>user._id === otherMember)
               return (
@@ -378,18 +383,19 @@ const SideBar = ({
           </div>
         </div>
 
-        {conversations?.map((conversation, index) => {
+        {conversations?.length > 0 && conversations?.map((conversation, index) => {
           const otherMember = conversation?.members?.find(
             (member) => member != me
           );
+          const [incoming, setIncoming] = useState(false);
+
           const [lastMessage, setLastMessage] = useState(
             conversation?.lastMessage
           );
           const [lastMessageId, setLastMessageId] = useState(
-            conversation?.lastMessageId
-          );
-          const [incoming, setIncoming] = useState(false);
-          useEffect(() => {
+           conversation?.lastMessageId
+         );
+         useEffect(() => {
             socket.on("getLastMessage", (data) => {
               data?.conversationId === conversation._id
                 ? setLastMessage(data?.lastMessage) ||
@@ -457,8 +463,8 @@ const SideBar = ({
                           <p className="text-center text-neutral-400 text-[14px]">
                             You:{" "}
                             {lastMessage?.length > 23
-                              ? lastMessage.slice(0, 23) + "..."
-                              : lastMessage}
+                              ?lastMessage.slice(0, 23) + "..."
+                              :lastMessage}
                           </p>
                         ) : (
                           <p className="text-center italic text-neutral-400 text-[12px]">
