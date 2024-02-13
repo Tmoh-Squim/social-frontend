@@ -339,7 +339,7 @@ const Coversation = ({
                                         className="no-select bg-[#66c428f5] py-[3px] px-3 font-500px text-[14px] 800px:text-[17px] text-white rounded-[14px] h-min inline-block"
                                         style={{ maxWidth: "fit-content" }}
                                       >
-                                        {message.text}
+                                        {message?.text}
                                       </div>
                                       <p className="text-start no-select text-black">
                                         {format(

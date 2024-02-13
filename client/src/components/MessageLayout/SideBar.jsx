@@ -39,10 +39,6 @@ const SideBar = ({
       setResult(null);
     }
   }, [query]);
-  useEffect(() => {
-    console.log('first',conversations);
-    
-  }, [conversations]);
   
   useEffect(() => {
     if (data !== "") {
@@ -227,7 +223,7 @@ const SideBar = ({
                   useEffect(() => {
                   setConversation(response.data.conversation)
                   
-                  conversation ? (
+                  conversation?.length !== 0 ? (
                     console.log(conversation)||
                     setOpen(true)
                     
