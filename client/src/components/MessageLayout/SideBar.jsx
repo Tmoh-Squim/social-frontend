@@ -226,8 +226,11 @@ const SideBar = ({
                 response.data.success === true ? (
                   useEffect(() => {
                   setConversation(response.data.conversation)
+                  
                   conversation ? (
+                    console.log(conversation)||
                     setOpen(true)
+                    
                   ):(
                     setOpen(false)
                   )
