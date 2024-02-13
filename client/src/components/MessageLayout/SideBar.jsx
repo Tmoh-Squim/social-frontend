@@ -4,6 +4,7 @@ import { ServerUrl, SocketId, Server } from "../../server.tsx";
 import { io } from "socket.io-client";
 import axios from "axios";
 import {toast} from "react-toastify"
+import {getConversations} from "../../redux/conversation"
 const socket = io(SocketId, { transports: ["websocket"] });
 const SideBar = ({
   conversations,
@@ -11,6 +12,7 @@ const SideBar = ({
   me,
   users,
   open,
+  dispatch,
   conversation,
   setConversation,
   active,
@@ -225,6 +227,7 @@ const SideBar = ({
                   useEffect(() => {
                   setConversation(response.data.conversation)
                   conversation ? (
+                    dispatch(getConversations(me))||
                     setOpen(true)
                   ):(
                     setOpen(false)
