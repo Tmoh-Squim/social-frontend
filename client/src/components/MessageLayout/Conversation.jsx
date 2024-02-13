@@ -183,9 +183,9 @@ const Coversation = ({
             }
           )
           .then((res) => {
+            setText("");
             // setCurrentConversation([...currentconversation, res.data.message]);
             updateLastMessage();
-            setText("");
           });
       }
     };
@@ -323,12 +323,12 @@ const Coversation = ({
                                         className="no-select bg-blue-500 px-3 800px:py-1.5 py-[3px]  text-white font-500 text-[14px] 800px:text-[17px] rounded-[14px] h-min inline-block "
                                         style={{ maxWidth: "fit-content" }}
                                       >
-                                        {message.text}
+                                        {message?.text}
                                       </p>
                                       <p className="text-end no-select text-black">
                                         {format(
                                           message?.createdAt
-                                            ? message.createdAt
+                                            ? message?.createdAt
                                             : null
                                         )}
                                       </p>
@@ -344,7 +344,7 @@ const Coversation = ({
                                       <p className="text-start no-select text-black">
                                         {format(
                                           message?.createdAt
-                                            ? message.createdAt
+                                            ? message?.createdAt
                                             : null
                                         )}
                                       </p>
@@ -356,7 +356,7 @@ const Coversation = ({
                           </div>
   
                           {/**menu popup */}
-                          {menu[messageId] && message.deletedForAll ? (
+                          {menu[messageId] && message?.deletedForAll ? (
                             <>
                               {menu[messageId] && (
                                 <div
@@ -376,7 +376,7 @@ const Coversation = ({
                             </>
                           ) : (
                             <>
-                              {menu[messageId] && message.sender === me ? (
+                              {menu[messageId] && message?.sender === me ? (
                                 <>
                                   {menu[messageId] && (
                                     <div
