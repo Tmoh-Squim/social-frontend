@@ -246,7 +246,7 @@ const Coversation = ({
                         onClick={() => handleProfile(receiver)}
                       >
                         <h2 className="text-xl text-center font-bold text-green-600">
-                          {receiver.name[0]}
+                          {receiver?.name[0]}
                         </h2>
                         <div
                           className={

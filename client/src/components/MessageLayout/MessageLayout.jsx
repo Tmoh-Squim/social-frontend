@@ -39,6 +39,7 @@ const MessageLayout = () => {
           navigate={navigate}
           users={users}
           setConversation={setConversation}
+          conversation={conversation}
           setActive={setActive}
           active={active}
           dispatch={dispatch}

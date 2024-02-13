@@ -11,6 +11,7 @@ const SideBar = ({
   me,
   users,
   open,
+  conversation,
   setConversation,
   active,
   navigate,
@@ -223,12 +224,13 @@ const SideBar = ({
                 response.data.success === true ? (
                   useEffect(() => {
                   setConversation(response.data.conversation)
-                  setTimeout(() => {
-                    setOpen(true);
-                setActive(null);
-                  }, 1000);
-                  
-                  }, [response])
+                  conversation ? (
+                    setOpen(true)
+                  ):(
+                    setOpen(false)
+                  )
+                setActive(null);                  
+                  }, [response,conversation])
                 ):(
                  toast.error(response.data.message)
                 )
