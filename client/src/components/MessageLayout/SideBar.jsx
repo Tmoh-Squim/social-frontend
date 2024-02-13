@@ -3,6 +3,7 @@ import { AiOutlineArrowRight,AiOutlineSearch,AiOutlineArrowLeft } from "react-ic
 import { ServerUrl, SocketId, Server } from "../../server.tsx";
 import { io } from "socket.io-client";
 import axios from "axios";
+import {toast} from "react-toastify"
 const socket = io(SocketId, { transports: ["websocket"] });
 const SideBar = ({
   conversations,
@@ -219,10 +220,19 @@ const SideBar = ({
                     },
                   }
                 );
-                const { conversation } = response.data;
-                setOpen(true);
-                setConversation(conversation);
+                response.data.success === true ? (
+                  useEffect(() => {
+                  setConversation(response.data.conversation)
+                  setTimeout(() => {
+                    setOpen(true);
                 setActive(null);
+                  }, 1000);
+                  
+                  }, [response])
+                ):(
+                 toast.error(response.data.message)
+                )
+                   
               } catch (error) {
                 alert("something went wrong");
                 console.log(error);

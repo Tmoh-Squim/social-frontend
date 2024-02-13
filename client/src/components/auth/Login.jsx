@@ -1,5 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import {toast} from "react-toastify"
@@ -100,12 +102,21 @@ const Login = () => {
 
           <div className="flex flex-col">
             <p className="my-2 cursor-pointer text-white">forgot password?</p>
-            <p className="text-white">
+            <p className="text-white mb-2">
               don't have account?{" "}
               <Link to="/register" className="text-blue-600 font-semibold">
                 Create account
               </Link>
             </p>
+            <GoogleLogin
+  onSuccess={credentialResponse => {
+    const decoded = jwtDecode(credentialResponse.credential)
+    console.log(decoded.picture);
+  }}
+  onError={() => {
+    console.log('Login Failed');
+  }}
+/>;
           </div>
         </form>
       </div>
