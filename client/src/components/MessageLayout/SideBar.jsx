@@ -227,7 +227,6 @@ const SideBar = ({
                   useEffect(() => {
                   setConversation(response.data.conversation)
                   conversation ? (
-                    dispatch(getConversations(me))||
                     setOpen(true)
                   ):(
                     setOpen(false)

@@ -38,7 +38,6 @@ const Coversation = ({
         });
       });
     }, []);
-  
     useEffect(() => {
       if (incoming?.conversationId === id) {
         setCurrentConversation((prev) => [...prev, incoming]);
@@ -47,6 +46,7 @@ const Coversation = ({
       //incoming &&
       //  conversation?.members.includes(incoming.sender) &&
       // setCurrentConversation((prev) => [...prev, incoming]);
+      dispatch(getConversations(me))
     }, [incoming, conversation]);
   
     useEffect(() => {
