@@ -281,8 +281,8 @@ const Coversation = ({
                 <div className="my-1 justify-between">
                   {currentconversation &&
                     currentconversation.map((message, index) => {
-                      const senderMessage = message.sender === me;
-                      const messageId = message._id;
+                      const senderMessage = message?.sender === me;
+                      const messageId = message?._id;
   
                       return (
                         <>
